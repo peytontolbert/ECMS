@@ -1,0 +1,449 @@
+<html>
+<head>
+<title>Sketchpad</title>
+
+    
+
+<style>
+/* Some CSS styling */
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.rightside {
+    top: 200px;
+    z-index: 4;
+    margin-left:10px;
+}
+#sketchpad {
+    z-index: 3;
+    border:2px solid #888;
+    border-radius:4px;
+    position:absolute; /* Necessary for correct mouse co-ords in Firefox */
+}
+
+.table, th, td {
+    padding: 10px;
+    table-layout: fixed;
+    width: 150px;
+}
+
+.abc1 {
+    border-style: solid;
+    border:2px solid red;
+    fill: red;
+    border-radius:4px;
+    position:absolute;
+    z-index: 4;
+    display: block;
+}
+
+.abc-1 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 70px;
+      left: 1000px;
+    }
+.abc-2 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 140px;
+      left: 1000px;
+  }
+.abc-3 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 215px;
+      left: 1000px;
+  }
+.abc-4 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 360px;
+      left: 1300px;
+  }
+.abc-5 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 40px;
+      left: 1540px;
+  }
+.abc-6 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 580px;
+      left: 1450px;
+  }
+.abc-7 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 600px;
+      left: 1550px;
+  }
+.abc-8 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 600px;
+      left: 1870px;
+  }
+.abc-9 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 420px;
+      left: 2195px;
+  }
+.abc-10 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 280px;
+      left: 2450px;
+  }
+.abc-11 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1340px;
+      left: 2300px;
+  }
+.abc-12 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1200px;
+      left: 2500px;
+  }
+.abc-13 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1250px;
+      left: 2500px;
+  }
+.abc-14 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1450px;
+      left: 2520px;
+  }
+.abc-15 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1190px;
+      left: 1935px;
+  }
+.abc-16 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1250px;
+      left: 1940px;
+  }
+.abc-17 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1190px;
+      left: 1870px;
+  }
+.abc-18 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1050px;
+      left: 1860px;
+  }
+.abc-19 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1020px;
+      left: 1735px;
+  }
+.abc-20 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 795px;
+      left: 1270px;
+  }
+.abc-21 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 810px;
+      left: 755px;
+  }
+.abc-22 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 660px;
+      left: 230px;
+  }
+.abc-23 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 635px;
+      left: 340px;
+  }
+.abc-24 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 715px;
+      left: 340px;
+  }
+.abc-25 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 715px;
+      left: 470px;
+  }
+.abc-26 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 785px;
+      left: 340px;
+  }
+.abc-27 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 785px;
+      left: 470px;
+  }
+.abc-28 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 940px;
+      left: 580px;
+  }
+.abc-29 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+    top: 962px;
+      left: 645px;
+  }
+.abc-30 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 962px;
+      left: 705px;
+  }
+.abc-31 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 962px;
+      left: 770px;
+  }
+.abc-32 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1020px;
+      left: 705px;
+  }
+.abc-33 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1270px;
+      left: 190px;
+  }
+.abc-34 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1270px;
+      left: 510px;
+  }
+.abc-35 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1310px;
+      left: 600px;
+  }
+.abc-36 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1270px;
+      left: 1280px;
+  }
+.abc-37 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1320px;
+      left: 1190px;
+  }
+.abc-38 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1435px;
+      left: 1480px;
+  }
+.abc-39 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1385px;
+      left: 1545px;
+  }
+.abc-40 {
+    white-space: nowrap;
+    position: absolute;
+    z-index: 2;
+      top: 1565px;
+      left: 455px;
+  }
+.valvedata {
+    top: 100px;
+    z-index: 4;
+    overflow-y: scroll; height: 150px; width: 300px;
+}
+
+.status {
+    display: inline;
+}
+
+.tagproposal {
+    position: absolute;
+    top: 500px;
+    left: 50px;
+    display: none;
+    margin: 20px;
+    z-index: 8;
+}
+
+.system1 {
+    position: absolute;
+    z-index: 1;
+      top: 200px;
+      left: 25px;
+  }
+</style>
+</head>
+<script src="store.js"></script>
+<body>
+  <a href="/system1history">System1 History</a>
+    <div id="valvedata" class="valvedata">
+        <form id="statusform" onsubmit="savevalve()">
+            <input type="button"></input>
+
+        </form>
+    </div>
+    <div class="tagproposal" id="proposal">
+        <button onclick="newline()">Add New Line</button>
+        <button onclick="checklineup()">Check valves</button>
+        <form id="proposalform" onsubmit="savevalves()">
+            <br>
+            <input type="button" onclick=savevalves() value="Submit"></input>
+            <br><br>
+    </form>
+    </div>
+    
+        <div class="rightside">
+            <input type="submit" value="Clear Sketchpad" onclick="clearCanvas(canvas,ctx);">
+            <button onclick="tagoutproposal()">Enter Tag Proposal</button>
+            <input type="submit" value="Toggle Sketchpad" onclick="togglesketchpad()">
+            Mode: editing
+            <div id="div1" class="system1">
+            <img src="images/system1.png" id="p1" alt="System" usemap="#system" width="2881" height="1955">
+            <map name="system">
+                <area shape="rect" class="abc1" coords="999,95,1050,128" alt="abc1" onclick="getabc1()"><area>
+                <area shape="rect" class="abc1" coords="995,168,1050,208" alt="abc2" onclick="getabc2()"><area>
+                <area shape="rect" class="abc1" coords="994,245,1050,290" alt="abc3" onclick="getabc3()"><area>
+                <area shape="rect" class="abc1" coords="1300,370,1350,425" alt="abc4" onclick="getabc4()"><area>
+                <area shape="rect" class="abc1" coords="1530,65,1580,100" alt="abc5" onclick="getabc5()"><area>
+                <area shape="rect" class="abc1" coords="1490,575,1540,620" alt="abc6" onclick="getabc6()"><area>
+                <area shape="rect" class="abc1" coords="1550,630,1600,660" alt="abc7" onclick="getabc7()"><area>
+                <area shape="rect" class="abc1" coords="1860,630,1930,670" alt="abc8" onclick="getabc8()"><area>
+                <area shape="rect" class="abc1" coords="2220,440,2270,475" alt="abc9" onclick="getabc9()"><area>
+                <area shape="rect" class="abc1" coords="2464,301,2530,345" alt="abc10" onclick="getabc10()"><area>
+                <area shape="rect" class="abc1" coords="2350,1337,2400,1390" alt="abc11" onclick="getabc11()"><area>
+                <area shape="rect" class="abc1" coords="2450,1210,2490,1235" alt="abc12" onclick="getabc12()"><area>
+                <area shape="rect" class="abc1" coords="2450,1260,2488,1290" alt="abc13" onclick="getabc13()"><area>
+                <area shape="rect" class="abc1" coords="2490,1450,2520,1490" alt="abc14" onclick="getabc14()"><area>
+                <area shape="rect" class="abc1" coords="1937,1215,1985,1245" alt="abc15" onclick="getabc15()"><area>
+                <area shape="rect" class="abc1" coords="1917,1251,1940,1286" alt="abc16" onclick="getabc16()"><area>
+                <area shape="rect" class="abc1" coords="1871,1218,1913,1243" alt="abc17" onclick="getabc17()"><area>
+                <area shape="rect" class="abc1" coords="1838,1055,1868,1090" alt="abc18" onclick="getabc18()"><area>
+                <area shape="rect" class="abc1" coords="1790,1040,1828,1080" alt="abc19" onclick="getabc19()"><area>
+                <area shape="rect" class="abc1" coords="1243,796,1269,843" alt="abc20" onclick="getabc20()"><area>
+  <p class="abc-1" id="abc1statusresult">ABC-1</p>
+  <p class="abc-2" id="abc2statusresult">ABC-2</p>
+  <p class="abc-3" id="abc3statusresult">ABC-3</p>
+  <p class="abc-4" id="abc4statusresult">ABC-4</p>
+  <p class="abc-5" id="abc5statusresult">ABC-5</p>
+  <p class="abc-6" id="abc6statusresult">ABC-6</p>
+  <p class="abc-7" id="abc7statusresult">ABC-7</p>
+  <p class="abc-8" id="abc8statusresult">ABC-8</p>
+  <p class="abc-9" id="abc9statusresult">ABC-9</p>
+  <p class="abc-10" id="abc10statusresult">ABC-10</p>
+  <p class="abc-11" id="abc11statusresult">ABC-11</p>
+  <p class="abc-12" id="abc12statusresult">ABC-12</p>
+  <p class="abc-13" id="abc13statusresult">ABC-13</p>
+  <p class="abc-14" id="abc14statusresult">ABC-14</p>
+  <p class="abc-15" id="abc15statusresult">ABC-15</p>
+  <p class="abc-16" id="abc16statusresult">ABC-16</p>
+  <p class="abc-17" id="abc17statusresult">ABC-17</p>
+  <p class="abc-18" id="abc18statusresult">ABC-18</p>
+  <p class="abc-19" id="abc19statusresult">ABC-19</p>
+  <p class="abc-20" id="abc20statusresult">ABC-20</p>
+  <p class="abc-21" id="abc21statusresult">ABC-21</p>
+  <p class="abc-22" id="abc22statusresult">ABC-22</p>
+  <p class="abc-23" id="abc23statusresult">ABC-23</p>
+  <p class="abc-24" id="abc24statusresult">ABC-24</p>
+  <p class="abc-25" id="abc25statusresult">ABC-25</p>
+  <p class="abc-26" id="abc26statusresult">ABC-26</p>
+  <p class="abc-27" id="abc27statusresult">ABC-27</p>
+  <p class="abc-28" id="abc28statusresult">ABC-28</p>
+  <p class="abc-29" id="abc29statusresult">ABC-29</p>
+  <p class="abc-30" id="abc30statusresult">ABC-30</p>
+  <p class="abc-31" id="abc31statusresult">ABC-31</p>
+  <p class="abc-32" id="abc32statusresult">ABC-32</p>
+  <p class="abc-33" id="abc33statusresult">ABC-33</p>
+  <p class="abc-34" id="abc34statusresult">ABC-34</p>
+  <p class="abc-35" id="abc35statusresult">ABC-35</p>
+  <p class="abc-36" id="abc36statusresult">ABC-36</p>
+  <p class="abc-37" id="abc37statusresult">ABC-37</p>
+  <p class="abc-38" id="abc38statusresult">ABC-38</p>
+  <p class="abc-39" id="abc39statusresult">ABC-39</p>
+  <p class="abc-40" id="abc40statusresult">ABC-40</p>
+            </map>  
+            </div>
+            <canvas id="sketchpad" height="2000" width="2800">
+            </canvas>
+        </div>
+    </div>
+    <script src="sketchpad.js" type="text/javascript"></script>
+    
+</body>
+</html>

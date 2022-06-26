@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/9f5794c0-520c-4cd6-997c-31059aee1b19/microsoft.web/sites/subscriptions/9f5794c0-520c-4cd6-997c-31059aee1b19/resourceGroups/pinboardz/providers/Microsoft.Web/sites/pinboardz",
-    "appService.deploySubpath": "."
-}

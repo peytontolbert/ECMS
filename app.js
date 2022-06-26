@@ -8,6 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var options = {
+  index: 'views/index.html'
+}
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -20,10 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('/', function(request, response) {
-  response.sendFile(path.join(_dirname + '/system1.html'))
-})
-//app.use('/users', usersRouter);
+app.get('/', express.static('/home/site/wwwroot', options))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

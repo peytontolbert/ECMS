@@ -54,6 +54,23 @@ app.get('/register', function(request, response) {
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "123",
+  database: "pinboards",
+})
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("connected to mysql");
+  con.query("CREATE DATABASE IF NOT EXISTS pinboards", function (err, result) {
+      if (err) throw err;
+      console.log("database pinboards connected");
+  });
+});
+
+
 
 server.listen(process.env.PORT || 443); 
 

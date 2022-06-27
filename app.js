@@ -55,7 +55,7 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
 var con = mysql.createConnection({
-  host: "localhost",
+  host: "72.218.151.51",
   user: "root",
   password: "123",
   database: "pinboards",
@@ -70,6 +70,29 @@ con.connect(function(err) {
   });
 });
 
+
+
+var employees = "CREATE TABLE IF NOT EXISTS employees (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, username varchar(255) NOT NULL, password varchar(255) NOT NULL)";
+con.query(employees, function (err, result) {
+    if (err) throw err;
+    console.log("users table connected");
+})
+
+var system1 = "CREATE TABLE IF NOT EXISTS system1 (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
+con.query(system1, function (err, result) {
+    if (err) throw err;
+    console.log("system1 table connected");
+})
+
+app.get('/system1historydata', function(req, res) {
+    let sql = "SELECT * FROM system1history"
+    console.log("get system1history");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
 
 
 server.listen(process.env.PORT || 443); 

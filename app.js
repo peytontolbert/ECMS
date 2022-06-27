@@ -12,6 +12,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var server = http.createServer(app);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -33,5 +35,5 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
 
-app.listen(process.env.PORT || 443)
+server.listen(process.env.PORT || 443); 
 

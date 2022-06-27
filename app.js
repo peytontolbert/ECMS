@@ -6,12 +6,6 @@ var logger = require('morgan');
 const http = require("http");
 
 
-const port = 443;
-
-const server = http.createServer(function(req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World');
-});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -31,5 +25,5 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
 
-server.listen(process.env.PORT || 80)
+app.listen(process.env.PORT || 443)
 

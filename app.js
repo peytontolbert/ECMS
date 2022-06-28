@@ -31,10 +31,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + '/index.html'));
-});
-
 app.get('/system1', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/system1.html'));
 });

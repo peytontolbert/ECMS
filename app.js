@@ -2,7 +2,6 @@ var createError = require('http-errors');
 const mysql = require("mysql");
 var express = require('express');
 var path = require('path');
-var bcrypt = require('bcrypt');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var logger = require('morgan');

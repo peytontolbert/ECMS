@@ -90,6 +90,206 @@ app.get('/system1historydata', function(req, res) {
 });
 
 
+app.get('/getabc1', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc1'"
+    console.log("get abc1");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc2', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc2'"
+    console.log("get abc2")
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc3', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc3'"
+    console.log("get abc3");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc4', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc4'"
+    console.log("get abc4");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc5', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc5'"
+    console.log("get abc5");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc6', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc6'"
+    console.log("get abc6");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc7', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc7'"
+    console.log("get abc7");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc8', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc8'"
+    console.log("get abc8");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc9', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc9'"
+    console.log("get abc9");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc10', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc10'"
+    console.log("get abc10");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc11', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc11'"
+    console.log("get abc11");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc12', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc12'"
+    console.log("get abc12");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc13', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc13'"
+    console.log("get abc13");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc14', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc14'"
+    console.log("get abc14");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc15', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc15'"
+    console.log("get abc15");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc16', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc16'"
+    console.log("get abc16");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc17', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc17'"
+    console.log("get abc17");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc18', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc18'"
+    console.log("get abc18");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc19', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc19'"
+    console.log("get abc19");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
+app.get('/getabc20', function(req, res) {
+    let sql = "SELECT * FROM system1 WHERE valve = 'abc20'"
+    console.log("get abc20");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username

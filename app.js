@@ -290,6 +290,16 @@ app.get('/getabc20', function(req, res) {
     })
 })
 
+
+app.get('/system1valves', async (req, res) => {
+    let sql = "SELECT * FROM system1"
+    con.query (sql, (error, results, fields) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username

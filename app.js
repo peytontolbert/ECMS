@@ -1,8 +1,10 @@
 var createError = require('http-errors');
 const mysql = require("mysql2");
 var express = require('express');
+var bcrypt = require('bcrypt');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require("body-parser");
 var session = require('express-session');
 var logger = require('morgan');
 const http = require("http");
@@ -29,6 +31,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
 
 app.get('/system1', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/system1.html'));

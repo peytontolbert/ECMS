@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 const mysql = require("mysql2");
 var express = require('express');
-var bcrypt = require('bcrypt');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require("body-parser");
@@ -304,7 +303,7 @@ app.get('/system1valves', async (req, res) => {
         res.send(results);
     })
 })
-
+/*
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username
@@ -333,7 +332,7 @@ app.post("/login", async (req, res)=> {
       }//end of User exists i.e. results.length==0
      }) //end of connection.query()
     }) //end of app.post()
-
+*/
 
     app.post("/savesystem1", async (req,res) => {
         console.log(req.body);

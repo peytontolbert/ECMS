@@ -367,6 +367,27 @@ app.post("/login", async (req, res)=> {
         })   // end of con.query
     }); // end of app.post
 
+    
+app.post('/system1wafs', async (req, res) => {
+    const valve = req.body.valve
+    const sqlSearch = "SELECT * FROM system1wafs where valve = ?"
+    const search_query = mysql.format(sqlSearch,[valve])
+
+    await con.query(search_query, async (error, results) => {
+        if (error) throw error;
+        if (results.length == 0) {
+            console.log("valve has no wafs");
+            console.log(results);
+            res.send(results);
+        }
+        else {
+        console.log(results)
+        res.send(results);
+        }
+    })
+})
+
+
     app.post("/savevalve", async (req,res) => {
         console.log(req.body);
         const valve = req.body.valve;

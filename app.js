@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-const mysql = require("mysql");
+const mysql = require("mysql2");
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -48,10 +48,10 @@ app.get('/register', function(request, response) {
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
-/*
+
 var con = mysql.createConnection({
   host: "72.218.151.51",
-  user: "root",
+  user: "root2",
   password: "123",
   database: "pinboards",
 })
@@ -87,8 +87,7 @@ app.get('/system1historydata', function(req, res) {
         console.log(results);
         res.send(results);
     })
-})
-*/
+});
 
 server.listen(process.env.PORT || 443); 
 

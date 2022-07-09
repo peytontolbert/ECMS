@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 var logger = require('morgan');
 const http = require("http");
-
+var brcrypt = require('bcrypt');
 
 
 var indexRouter = require('./routes/index');
@@ -303,7 +303,6 @@ app.get('/system1valves', async (req, res) => {
         res.send(results);
     })
 })
-/*
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username
@@ -332,7 +331,6 @@ app.post("/login", async (req, res)=> {
       }//end of User exists i.e. results.length==0
      }) //end of connection.query()
     }) //end of app.post()
-*/
 
     app.post("/savesystem1", async (req,res) => {
         console.log(req.body);

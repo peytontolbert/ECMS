@@ -7,7 +7,6 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 var logger = require('morgan');
 const http = require("http");
-var brcrypt = require('bcrypt');
 
 
 var indexRouter = require('./routes/index');

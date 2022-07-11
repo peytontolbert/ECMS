@@ -156,7 +156,7 @@ const app = document.getElementById("valvedata");
 if(app.style.display === "block") {
         const valvewafs = document.getElementById("valvewafs");
         let wafdata = { "valve": valve }
-        const wafresponse = await fetch("/system1wafs", {
+        const wafresponse = await fetch("./system1wafs", {
             method: "POST",
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(wafdata)

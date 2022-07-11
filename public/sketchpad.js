@@ -68,11 +68,11 @@ function tagoutproposal() {
 }
 
 async function getabc1() {
-    const data = fetch('./getabc1').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    const data = fetch('./getabc1').then(response => response.json()).then(data => valvewindow(data));
 }
 
 async function getabc2() {
-    const data = fetch('./getabc2').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    const data = fetch('./getabc2').then(response => response.json()).then(data => valvewindow(data));
 }
 
 async function getabc3() {

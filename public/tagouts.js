@@ -1,2 +1,2 @@
-const data = fetch('./system1valves').then(response => response.json()).catch(error => console.log(error));
+const data = fetch('./system1valves').then(response => response.json());
 export default data;

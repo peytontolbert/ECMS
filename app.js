@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-const mysql = require("mysql2");
+const mysql = require("mysql");
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');

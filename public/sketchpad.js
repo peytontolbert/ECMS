@@ -6,7 +6,7 @@ var canvas,ctx;
 
 
 async function getvalvedata() {
-    await fetch('./system1valves').then(response => response.json()).then(data => valvedata = data).catch(error => console.log(error));
+    await fetch('./system1valves').then(response => response.json()).then(data => valvedata = data);
     checkstoragedifference(valvedata);
 }
 

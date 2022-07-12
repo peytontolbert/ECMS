@@ -41,6 +41,14 @@ app.get('/login', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/login.html'));
 });
 
+app.get('/newdiagram', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/newdiagram.html'));
+});
+
+app.get('/valvelookup', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/valvelookup.html'));
+});
+
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/index.html'));
 });

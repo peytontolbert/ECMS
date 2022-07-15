@@ -340,6 +340,14 @@ app.post("/login", async (req, res)=> {
      }) //end of connection.query()
     }) //end of app.post()
 
+
+
+    app.post("/submitnewdiagram", upload.single('diagram'), function (req,res) {
+        console.log(req.file)
+    })
+
+
+
     app.post("/savesystem1", async (req,res) => {
         console.log(req.body);
         const username = req.body.username;

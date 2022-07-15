@@ -7,12 +7,13 @@ var bodyParser = require("body-parser");
 var session = require('express-session');
 var logger = require('morgan');
 const http = require("http");
-
+const multer = require('multer');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var upload = multer({ dest: './uploads/' });
 
 var server = http.createServer(app);
 

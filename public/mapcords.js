@@ -26,6 +26,8 @@ function DoSomething(){
     }
 }
 
+
+
 function FirstCord(){
     canvas.addEventListener('mousedown', function(e) {
         getCursorPosition(canvas, e);
@@ -51,3 +53,15 @@ var visible = 0;
 canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(canvas, e)
 })
+
+window.addEventListener('load', function() {
+    this.document.querySelector('input[type="file"]').addEventListender('change', function() {
+        if (this.files && this.files[0]) {
+            var img = document.querySelector('img');
+            img.onload = () => {
+                URL.revokeObjectURL(img.src); // no longer needed, free memory
+            }
+            img.src = URL.createObjectURL(this.files[0]);
+        }
+    });
+});

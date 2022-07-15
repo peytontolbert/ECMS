@@ -27,6 +27,21 @@ function DoSomething(){
 }
 
 
+async function submitDiagram() {
+    var img = document.getElementById('canvas');
+    var diagramfile = document.getElementById('diagramfile');
+    let data = { "file": img, "name": diagram.value, "image": diagramfile };
+    console.log(data);
+    await fetch("/submitnewdiagram", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(data)
+      }).then(res => {
+        console.log("Request complete! response:", res);
+      });
+}
+
+
 
 function FirstCord(){
     canvas.addEventListener('mousedown', function(e) {
@@ -48,6 +63,7 @@ const canvas = document.getElementById('canvas');
 const newvalve = document.getElementById('newvalve').style;
 var click = 1;
 var visible = 0;
+let diagram = document.getElementById('diagram');
 
 
 canvas.addEventListener('mousedown', function(e) {
@@ -55,9 +71,9 @@ canvas.addEventListener('mousedown', function(e) {
 })
 
 window.addEventListener('load', function() {
-    this.document.querySelector('input[type="file"]').addEventListender('change', function() {
+    this.document.querySelector('input[type="file"]').addEventListener('change', function() {
         if (this.files && this.files[0]) {
-            var img = document.querySelector('img');
+            var img = document.getElementById('canvas');
             img.onload = () => {
                 URL.revokeObjectURL(img.src); // no longer needed, free memory
             }

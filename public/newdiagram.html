@@ -4,7 +4,7 @@
 <html lang = "en">
 <head>
 	<meta charset = "UTF-8">
-	<title> My Form </title>
+	<title> Create New Diagram</title>
 	<style>
 		#mylink{
 			font-size: 25px;
@@ -15,9 +15,9 @@
         <header>
 		<h1>Create new diagram</h1>
             <label for=""img">Select image:</label>
-            <input type="file" />
-            <br><img id="myimg" src="#">
-            <input type="submit">
+            <form action="/submitnewdiagram" method="post" enctype="multipart/form-data">
+                <input type="file" name="diagram"/>
+                <input type="submit" value="Send">
         </form>
         <button onclick=DoSomething()>New valve</button>
         <form id="newvalve" style="visibility: hidden">

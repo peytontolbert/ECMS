@@ -19,14 +19,15 @@
                 <input type="file" name="diagram"/>
                 <input type="submit" value="Send">
         </form>
-        <button onclick=DoSomething()>New valve</button>
+        <button onclick=doSomething()>New valve</button>
         <form id="newvalve" style="visibility: hidden">
+            <input type="text" id="system" placeholder="system name"></input>
             <input type="text" id="valve" placeholder="valve name"></input>
-            <button onclick=FirstCord()>First cords</button>
-            <input type="text" id="1xy" placeholder="First click"></input>
-            <button onclick=SecCord()>Second cords</button>
-            <input type="text" id="2xy" placeholder="Second click"></input>
-            <button onclick="sumbit">Submit</button>
+            <button onclick=firstCord()>First cords</button>
+            <input type="text" id="x" placeholder="First click"></input>
+            <button onclick=secCord()>Second cords</button>
+            <input type="text" id="y" placeholder="Second click"></input>
+            <button onclick=submitValve()>Submit</button>
         </form>
 	</header>
     <img id="canvas" src="./images/system1.png">

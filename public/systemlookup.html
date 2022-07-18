@@ -1,0 +1,36 @@
+
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "UTF-8">
+	<title> My Form </title>
+	<style>
+		#mylink{
+			font-size: 25px;
+		}
+	</style>
+</head>
+<body align='center'>
+        <header>
+		<h1>System Lookup</h1>
+		<a>Select system: </a>
+		<select name="system" id="system">
+			<option value=""></option>
+			<option value="1">System 1</option>
+			<option value="2">System 2</option>
+			<option value="3">System 3</option>
+		</select>
+		<button onclick=systemsearch()>Submit</button>
+		<br>
+            <input type="text" id="valve" placeholder="valve name"></input>
+            <button onclick=search()>Submit</button>
+	</header>
+	<p id="systemdata">system information</p>
+    <p id="valvedata"> valve information</p>
+    <p></p>
+    <p id="htmlwafdata">waf information</p>
+
+<script src="systemsearch.js"></script>
+</body>
+</html>

@@ -9,11 +9,20 @@ var logger = require('morgan');
 const http = require("http");
 const multer = require('multer');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-var upload = multer({ dest: './uploads/' });
+var uploadstorage = multer.diskStorage({ 
+                            destination: './uploads/',
+                            filename: function(req, file, callback) { 
+                                callback(null, file.originalname)
+                            } 
+                            });
+
+
+var upload = multer({ storage: uploadstorage })
 
 var server = http.createServer(app);
 
@@ -46,8 +55,8 @@ app.get('/newdiagram', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/newdiagram.html'));
 });
 
-app.get('/valvelookup', function(request, response) {
-	response.sendFile(path.join(__dirname + '/public/valvelookup.html'));
+app.get('/systemlookup', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/systemlookup.html'));
 });
 
 app.get('/', function(request, response) {
@@ -56,6 +65,12 @@ app.get('/', function(request, response) {
 
 app.get('/register', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/registration.html'));
+});
+
+
+
+app.get('/systems', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/systems.html'));
 });
 
 app.use('/index', indexRouter);
@@ -91,6 +106,12 @@ con.query(system1, function (err, result) {
     console.log("system1 table connected");
 })
 
+var systems = "CREATE TABLE IF NOT EXISTS systems (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
+con.query(systems, function (err, result) {
+    if (err) throw err;
+    console.log("systems table connected");
+})
+
 app.get('/system1historydata', function(req, res) {
     let sql = "SELECT * FROM system1history"
     console.log("get system1history");
@@ -101,6 +122,25 @@ app.get('/system1historydata', function(req, res) {
     })
 });
 
+app.get('/system1valvedata', function(req, res) {
+    let sql = "SELECT * FROM system1"
+    console.log("get system1 valve data");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+});
+
+
+app.get('/dbdata', function(req, res) {
+    let sql = "SELECT * FROM dbdata"
+    con.query(sql, (error, results) => {
+        if (error) throw error;
+        console.log(results)
+        res.send(results);
+    })
+})
 
 app.get('/getabc1', function(req, res) {
     let sql = "SELECT * FROM system1 WHERE valve = 'abc1'"
@@ -340,14 +380,6 @@ app.post("/login", async (req, res)=> {
      }) //end of connection.query()
     }) //end of app.post()
 
-
-
-    app.post("/submitnewdiagram", upload.single('diagram'), function (req,res) {
-        console.log(req.file)
-    })
-
-
-
     app.post("/savesystem1", async (req,res) => {
         console.log(req.body);
         const username = req.body.username;
@@ -386,6 +418,29 @@ app.post("/login", async (req, res)=> {
     }); // end of app.post
 
     
+    app.post("/submitnewvalve", async (req,res) => {
+        console.log(req.body);
+        const system = req.body.system;
+        const x = req.body.x;
+        const y = req.body.y;
+        const valve = req.body.valve;
+        const sqlSearch = "SELECT * FROM systems WHERE system = ?"
+        const search_query = mysql.format(sqlSearch,[system])
+        const sqlInsert = "INSERT INTO newvalves VALUES (?,?,?,?)"
+        const insert_query = mysql.format(sqlInsert,[system, valve, x, y])
+        const sqlUpdate = "UPDATE `system1` SET `status` = ?, `username` = ? WHERE `valve`= ?"
+        await con.query (search_query, async (err, result) => {
+            if (err) throw (err)
+                await con.query (insert_query, (err, result) => {
+                    if (err) throw (err)
+                    console.log ("Created new valve " + valve)
+                    console.log(result.insertId)
+                    res.send("valve added")
+                })
+        })   // end of con.query
+    }); // end of app.post
+
+    
 app.post('/system1wafs', async (req, res) => {
     const valve = req.body.valve
     const sqlSearch = "SELECT * FROM system1wafs where valve = ?"
@@ -404,6 +459,58 @@ app.post('/system1wafs', async (req, res) => {
         }
     })
 })
+
+app.post('/systemlookup', async (req, res) => {
+    
+    const system = req.body.system;
+    console.log(req.body.system)
+    const sqlSearch = "SELECT * FROM systems where id = ?"
+    const search_query = mysql.format(sqlSearch,[system])
+
+    await con.query(search_query, async (error, results) => {
+        if (error) throw error;
+        if (results.length == 0) {
+            console.log("system not found");
+            console.log(results);
+            res.send(results);
+        }
+        else {
+            const systemSearch = "SELECT * FROM {"
+        console.log(results)
+        res.send(results);
+        }
+    })
+})
+
+    app.post("/submitnewdiagram", upload.single('diagram'), async function (req,res) {
+        console.log(req.file)
+        const system = req.file.originalname.replace('.png', '');
+        console.log(system)
+        
+        const sqlSearch = "SELECT * FROM systems where system = ?"
+        const search_query = mysql.format(sqlSearch,[system])
+        const sqlInsert = "INSERT INTO systems (system) VALUES (?)"
+        const insert_query = mysql.format(sqlInsert,[system])
+        await con.query (search_query, async (err, result) => {
+            if (err) throw (err)
+            console.log("search results")
+            console.log(result.length)
+            if (result.length == 0) {
+                console.log("system not found: " + system)
+                console.log("creating new system")
+                await con.query (insert_query, (err, result) => {
+                    if (err) throw (err)
+                    console.log ("Created new system " + system)
+                    console.log(result.insertId)
+                    res.send("system added")
+                })
+            } else {
+                console.log("system exists")
+                res.send("system exists")
+            }
+        })   // end of con.query
+    }); // end of app.post
+
 
 
     app.post("/savevalve", async (req,res) => {

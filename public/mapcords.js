@@ -1,3 +1,4 @@
+
 async function getCursorPosition(canvas, event) {
     const rect = await canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
@@ -16,7 +17,7 @@ async function getCursorPosition(canvas, event) {
     }
 }
 
-function DoSomething(){
+function doSomething() {
     if(newvalve.visibility==='hidden') {
     newvalve.visibility = 'visible';
     visible++;
@@ -41,24 +42,35 @@ async function submitDiagram() {
       });
 }
 
+async function submitValve() {
+    let data = { "system": system.value, "valve": valve.value, "x": firstbox.value, "y": secondbox.value }
+    console.log(data);
+    await fetch("/submitnewvalve", {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(data)
+    }).then(res => {
+        console.log("Request complete! response:", res);
+    });
+}
 
 
-function FirstCord(){
+function firstCord(){
     canvas.addEventListener('mousedown', function(e) {
         getCursorPosition(canvas, e);
         firstbox.value = x + "," + y;
     })
 };
 
-function SecCord(){
+function secCord(){
     canvas.addEventListener('mousedown', function(e) {
         getCursorPosition(canvas, e);
         secondbox.value = x + "," + y;
     })
 };
 
-const firstbox = document.getElementById('1xy');
-const secondbox = document.getElementById('2xy');
+const firstbox = document.getElementById('x');
+const secondbox = document.getElementById('y');
 const canvas = document.getElementById('canvas');
 const newvalve = document.getElementById('newvalve').style;
 var click = 1;

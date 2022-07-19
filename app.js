@@ -443,7 +443,7 @@ app.post("/login", async (req, res)=> {
     
 app.post('/system1wafs', async (req, res) => {
     const valve = req.body.valve
-    const sqlSearch = "SELECT * FROM system1wafs where valve = ?"
+    const sqlSearch = "SELECT * FROM system1 where valve = ?"
     const search_query = mysql.format(sqlSearch,[valve])
 
     await con.query(search_query, async (error, results) => {

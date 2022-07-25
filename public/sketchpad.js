@@ -4,39 +4,30 @@
 var canvas,ctx;
 
 
-
 async function getvalvedata() {
-    await fetch('/system1valves').then(response => response.json()).then(data => valvedata = data);
-    checkstoragedifference(valvedata);
+    await fetch('./system1valves').then(response => response.json()).then(data => valvedata = data).catch(error => console.log(error));
+    populatevalves(valvedata);
 }
 
-function checkstoragedifference(valvedata) {
-console.log(valvedata)
-    const valvenames = ["abc1","abc2","abc3","abc4","abc5","abc6","abc7","abc8","abc9","abc10","abc11","abc12","abc13","abc14","abc15","abc16","abc17","abc18","abc19","abc20"];
-    for(i=0;i<valvedata.length;i++) {
-        if (valvedata[i].status === localStorage.getItem(valvedata[i].valve+"status")) {
-            console.log("no change");
-        } else { 
-            localStorage.setItem(valvedata[i].valve+"status", valvedata[i].status);
-            console.log("set " + valvedata[i].valve); }
-    }   
-     for(i=0; i<valvedata.length; i++) {
+async function populatevalves(valvedata) {
+    //console.log(valvedata);
+    for(i=0; i<await valvedata.length; i++) {
+        var cords = document.getElementById(valvedata[i].valve+"area");
+        cords.coords = valvedata[i].coords;
+        var status = document.getElementById(valvedata[i].valve+"statusresult")
         if (valvedata[i].status === "Danger_Tag_Open") {
-            document.getElementById(valvedata[i].valve+"statusresult").style.color = "green";
-          } else if (valvedata[i].status === "Untagged") {
-            document.getElementById(valvedata[i].valve+"statusresult").style.color = "black";
-        } else if (valvedata[i].status === "Danger_Tag_Shut") {
-            document.getElementById(valvedata[i].valve+"statusresult").style.color = "red";
+            status.style.color = "green";
+          } else if (valvedata[i].status === "Danger_Tag_Shut") {
+            status.style.color = "red";
         } else if (valvedata[i].status === "Caution_Tag") {
-            document.getElementById(valvedata[i].valve+"statusresult").style.color = 'yellow';
+            status.style.color = 'yellow';
         } else if (valvedata[i].status === "Valve_Working") {
-            document.getElementById(valvedata[i].valve+"statusresult").style.color = 'blue';
+            status.style.color = 'blue';
         } else {
             return
         }
-        }
-};
-
+    }
+}
 
 // Variables to keep track of the mouse position and left-button status 
 var mouseX,mouseY,mouseDown=0;
@@ -67,124 +58,150 @@ function tagoutproposal() {
     }
 }
 
+var valveclicked="";
+var click1=1;
+var click2=1;
+var click3=1;
+var click4=1;
+var click5=1;
+var click6=1;
+var click7=1;
+var click8=1;
+var click9=1;
+var click10=1;
+
 async function getabc1() {
-    const data = fetch('./getabc1').then(response => response.json()).then(data => valvewindow(data));
+    console.log(valveclicked);
+    if (valveclicked !== 1 ) { 
+        const data = fetch('./getabc1').then(response => response.json()).then(data => valvewindow(data)) 
+        valveclicked=1;
+    } else {
+    return
+    }
 }
 
 async function getabc2() {
-    const data = fetch('./getabc2').then(response => response.json()).then(data => valvewindow(data));
+    console.log(valveclicked);
+    if (valveclicked !== 2 ) { 
+        const data = fetch('./getabc2').then(response => response.json()).then(data => valvewindow(data)) 
+        valveclicked=2;
+    } else {
+    return
+    }
 }
 
 async function getabc3() {
-    const data = fetch('./getabc3').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(valveclicked);
+    if (valveclicked !== 3 ) { 
+        const data = fetch('./getabc3').then(response => response.json()).then(data => valvewindow(data)) 
+        valveclicked=3;
+    } else {
+    return
+    }
 }
 
 async function getabc4() {
-    const data = fetch('./getabc4').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(valveclicked);
+    if (valveclicked !== 4) { 
+        const data = fetch('./getabc4').then(response => response.json()).then(data => valvewindow(data)) 
+        valveclicked=4
+    } else {
+    return
+    }
 }
 
 async function getabc5() {
-    const data = fetch('./getabc5').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(valveclicked);
+    if (valveclicked !== 5 ) { 
+        const data = fetch('./getabc5').then(response => response.json()).then(data => valvewindow(data)) 
+        valveclicked=5;
+    } else {
+    return
+    }
 }
 
 async function getabc6() {
-    const data = fetch('./getabc6').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(click6);
+    if (click6 === 1 ) { 
+        const data = fetch('./getabc6').then(response => response.json()).then(data => valvewindow(data)) 
+        click6++;
+    } else {
+    return
+    }
 }
 
 async function getabc7() {
-    const data = fetch('./getabc7').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(click7);
+    if (click7 === 1 ) { 
+        const data = fetch('./getabc7').then(response => response.json()).then(data => valvewindow(data)) 
+        click7++;
+    } else {
+    return
+    }
 }
 
 async function getabc8() {
-    const data = fetch('./getabc8').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(click8);
+    if (click8 === 1 ) { 
+        const data = fetch('./getabc8').then(response => response.json()).then(data => valvewindow(data)) 
+        click8++;
+    } else {
+    return
+    }
 }
 
 async function getabc9() {
-    const data = fetch('./getabc9').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(click9);
+    if (click9 === 1 ) { 
+        const data = fetch('./getabc9').then(response => response.json()).then(data => valvewindow(data)) 
+        click9++;
+    } else {
+    return
+    }
 }
 
 async function getabc10() {
-    const data = fetch('./getabc10').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc11() {
-    const data = fetch('./getabc11').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc12() {
-    const data = fetch('./getabc12').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc13() {
-    const data = fetch('./getabc13').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc14() {
-    const data = fetch('./getabc14').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc15() {
-    const data = fetch('./getabc15').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc16() {
-    const data = fetch('./getabc16').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc17() {
-    const data = fetch('./getabc17').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc18() {
-    const data = fetch('./getabc18').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc19() {
-    const data = fetch('./getabc19').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
-}
-
-async function getabc20() {
-    const data = fetch('./getabc20').then(response => response.json()).then(data => valvewindow(data)).catch(error => console.log(error));
+    console.log(click10);
+    if (click10 === 1 ) { 
+        const data = fetch('./getabc10').then(response => response.json()).then(data => valvewindow(data)) 
+        click10++;
+    } else {
+    return
+    }
 }
 
 
 async function valvewindow(data) {
     var clickcount = 0;
-    const valve = data[0].valve;
+    console.log(data)
+    var wafdata = data;
+    const valve = wafdata[0].id_valve;
     //console.log(JSON.parse(vdata));
 const app = document.getElementById("valvedata");
 if(app.style.display === "block") {
         const valvewafs = document.getElementById("valvewafs");
-        let wafdata = { "valve": valve }
-        const wafresponse = await fetch("./system1wafs", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(wafdata)
-          })
-        const wafsdata = await wafresponse.json();
     const statusform = document.getElementById("statusform");
     const status = document.getElementById("status");
     const inputvalve = document.getElementById("inputvalve");
     const formbutton = document.getElementById("formbutton");
-    if(inputvalve == valve) { 
+    if(inputvalve.innerHTML === "valve: " + valve) { 
         console.log("clicked same valve")
+        return;
     } else {
-        
+        console.log("clicked different valve")
     const statusform = document.getElementById("statusform");
     newvalvewafs = document.createElement("div");
     newvalvewafs.id = "valvewafs";
     inputvalve.value = valve;
     inputvalve.innerHTML = "valve: " + valve;
-    let inputstuff = document.getElementById("valvewafs");
-    if(wafsdata.length !== 0) {
-    for(i=0;i<await wafsdata.length;i++) {
-        console.log(wafsdata);
+    if(wafdata.length !== 0) {
+        console.log(wafdata);
+    for(i=0;i<await wafdata.length;i++) {
         const inputstuffs = document.createElement("p");
         inputstuffs.id = "inputstuff" + i;
-        inputstuffs.innerHTML = await wafsdata[i].waf + " " + await wafsdata[i].status; 
-        newvalvewafs.appendChild(inputstuffs);
-        
-    statusform.replaceChild(newvalvewafs, valvewafs);
+        inputstuffs.innerHTML = await wafdata[i].waf; 
+        await newvalvewafs.appendChild(inputstuffs);
+    await statusform.replaceChild(newvalvewafs, valvewafs);
 
     };
         } else { 
@@ -193,18 +210,11 @@ if(app.style.display === "block") {
     return
     }
 } else {
-        let wafdata = { "valve": valve }
-        const wafresponse = await fetch("./system1wafs", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(wafdata)
-          })
-        const wafsdata = await wafresponse.json();
-        console.log(JSON.stringify(wafsdata));
-
 app.style.display = "block";
 console.log("valve window valve: " + valve);
 const statusform = document.getElementById("statusform");
+const removewafform = document.getElementById("removewaf");
+const removewafbutton = document.getElementById("rmvbutton");
 let input = document.createElement("p");
 input.id = "inputvalve";
 statusform.appendChild(input);
@@ -216,14 +226,37 @@ statusform.appendChild(wafslabel);
 let valvewafs = document.createElement("div");
 valvewafs.id = "valvewafs";
 statusform.appendChild(valvewafs);    
-for(i=0;i<await wafsdata.length;i++) {
+if(wafdata.length !== 0) { 
+for(i=0;i<await wafdata.length;i++) {
     const inputstuffs = document.createElement("p");
     inputstuffs.id = "inputstuff" + i;
-    inputstuffs.innerHTML = await wafsdata[i].waf + " " + await wafsdata[i].status; 
+    inputstuffs.innerHTML = await wafdata[i].waf; 
     valvewafs.appendChild(inputstuffs);
-};
+}
+} else { return };
+
+let btn = document.createElement("button");
+let rmvbtn = document.createElement("input");
+rmvbtn.id = "rmvbutton";
+rmvbtn.type = "submit";
+rmvbtn.value = "Submit";
+rmvbtn.innerHTML = "remove WAF";
+rmvbtn.onclick = removewaf();
+btn.name = "submit";
+btn.id = "formbutton";
+btn.innerHTML = "submit";
+let waflabel = document.createElement("label");
+waflabel.innerHTML = "ADD WAF";
+statusform.appendChild(waflabel);
+let waf = document.createElement("input");
+waf.name = "WAF";
+waf.type = "text";
+waf.id = "inputwaf";
+statusform.appendChild(waf);
+let newline2 = document.createElement("P");
+statusform.appendChild(newline2);
 let statuslabel = document.createElement("label");
-statuslabel.innerHTML = "CHANGE STATUS";
+statuslabel.innerHTML = "STATUS";
 statusform.appendChild(statuslabel);
 let select = document.createElement("select");
 select.id = "status";
@@ -231,10 +264,6 @@ select.name = "status";
 statusform.appendChild(select);
 let empty = document.createElement("option");
 select.appendChild(empty);
-let tagless = document.createElement("option");
-tagless.innerHTML = "Untagged";
-tagless.value = "Untagged";
-select.appendChild(tagless);
 let caution = document.createElement("option");
 caution.innerHTML = "Caution Tag";
 caution.value = "Caution_Tag";
@@ -251,41 +280,27 @@ let working = document.createElement("option");
 working.innerHTML = "Valve Working";
 working.value = "Valve_Working";
 select.appendChild(working);
-let newline = document.createElement("P")
-statusform.appendChild(newline);
-let btn = document.createElement("button");
-btn.name = "submit";
-btn.id = "formbutton";
-btn.innerHTML = "submit";
-let waflabel = document.createElement("label");
-waflabel.innerHTML = "ADD WAF/PERMIT";
-statusform.appendChild(waflabel);
-let waf = document.createElement("input");
-waf.name = "WAF";
-waf.type = "text";
-waf.id = "inputwaf";
-statusform.appendChild(waf);
 btn.onsubmit = savevalve();
 statusform.appendChild(btn);
-let newline2 = document.createElement("P");
-statusform.appendChild(newline2);
-let removeform = document.createElement("form");
-statusform.appendChild(removeform)
+let newline = document.createElement("P")
+statusform.appendChild(newline);
+
+let rmvlabel = document.createElement("label");
+rmvlabel.innerHTML = "REMOVE WAF/WORK";
+removewafform.appendChild(rmvlabel);
 let removeselect = document.createElement("select");
 removeselect.id = "removeselect";
-removeform.appendChild(removeselect);
+removewafform.appendChild(removeselect);
 let empty2 = document.createElement("option");
 removeselect.appendChild(empty2);
-for(i=0; i < await wafsdata.length; i++) {
+for(i=0; i < await wafdata.length; i++) {
     let removeoption = document.createElement("option");
-    removeoption.value = wafsdata[i].waf;
-    removeoption.innerHTML = wafsdata[i].waf;
+    removeoption.value = wafdata[i].waf;
+    removeoption.innerHTML = wafdata[i].waf;
     removeselect.appendChild(removeoption)
 };
-let removewafbutton = document.createElement("button");
-removewafbutton.innerHTML = "remove waf/permit";
-removewafbutton.onclick = removewaf();
-removeform.appendChild(removewafbutton); 
+rmvbtn.onsubmit = removewaf();
+removewafform.appendChild(rmvbtn);
 }
 /*const para = document.createElement("p");
 const node = document.createTextNode("This is new.");
@@ -300,25 +315,28 @@ element.className = 'abc1';
 
 }
 
-async function removewaf() {
+function removewaf() {
+    console.log("removingwaf")
+    return;
     let valve = document.getElementById("inputvalve").innerHTML;
     let waf = document.getElementById("removeselect");
+    console.log(data)
     if(waf.value !== "") {
         let data = { "valve": valve.value, "waf": waf.value}
-        await fetch("/removewaf", {
+        fetch("/removewaf", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
     }).then(res => {
         console.log("deleted waf ", res);
     });
-} else { return }
+} else { }
 };
 
 async function savevalve() {
     let status = document.getElementById("status");
     let valve = document.getElementById("inputvalve");
-    let waf = document.getElementById("inputwaf");
+    var waf = document.getElementById("inputwaf");
     if(status.value !== "" ) {
     let data = { "valve": valve.value, "status": status.value, "waf": waf.value };
     console.log(data);

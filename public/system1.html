@@ -146,14 +146,18 @@
     <h1>
       <a href="/system1historydata">System1 History</a>
     </h1>
+    
+    <input type="submit" value="Clear Sketchpad" onclick="clearCanvas(canvas,ctx);">
+    <button onclick="tagoutproposal()">Enter Tag Proposal</button>
+    <input type="submit" value="Toggle Sketchpad" onclick="togglesketchpad()"> Mode: editing
   </header>
   <a </a>
   <a href="/systems">Systems</a>
     <div id="valvedata" class="valvedata">
         <form id="statusform" onsubmit="savevalve()">
-            <input type="button"></input>
-
         </form>
+        <form id="removewaf" onsubmit="removewaf()">
+      </form>
     </div>
     <br><br><br>
     <div class="tagproposal" id="proposal">
@@ -165,24 +169,21 @@
             <br><br>
     </form>
     </div>
-    
+    <br><p></p><br><p></p>
         <div class="rightside">
-            <input type="submit" value="Clear Sketchpad" onclick="clearCanvas(canvas,ctx);">
-            <button onclick="tagoutproposal()">Enter Tag Proposal</button>
-            <input type="submit" value="Toggle Sketchpad" onclick="togglesketchpad()"> Mode: editing
             <div id="div1" class="system1">
             <img src="images/system1.png" id="p1" alt="System" usemap="#system" width="2628" height="690">
             <map name="system">
-                <area shape="rect" class="abc1" coords="999,95,1050,128" alt="abc1" onclick="getabc1()"><area>
-                <area shape="rect" class="abc1" coords="995,168,1050,208" alt="abc2" onclick="getabc2()"><area>
-                <area shape="rect" class="abc1" coords="994,245,1050,290" alt="abc3" onclick="getabc3()"><area>
-                <area shape="rect" class="abc1" coords="1300,370,1350,425" alt="abc4" onclick="getabc4()"><area>
-                <area shape="rect" class="abc1" coords="1530,65,1580,100" alt="abc5" onclick="getabc5()"><area>
-                <area shape="rect" class="abc1" coords="1490,575,1540,620" alt="abc6" onclick="getabc6()"><area>
-                <area shape="rect" class="abc1" coords="1550,630,1600,660" alt="abc7" onclick="getabc7()"><area>
-                <area shape="rect" class="abc1" coords="1860,630,1930,670" alt="abc8" onclick="getabc8()"><area>
-                <area shape="rect" class="abc1" coords="2220,440,2270,475" alt="abc9" onclick="getabc9()"><area>
-                <area shape="rect" class="abc1" coords="2464,301,2530,345" alt="abc10" onclick="getabc10()"><area>
+                <area shape="rect" id="abc1area" class="abc1" coords="" alt="abc1" onclick="getabc1()"><area>
+                <area shape="rect" id="abc2area" class="abc1" coords="" alt="abc2" onclick="getabc2()"><area>
+                <area shape="rect" id="abc3area" class="abc1" coords="" alt="abc3" onclick="getabc3()"><area>
+                <area shape="rect" id="abc4area" class="abc1" coords="" alt="abc4" onclick="getabc4()"><area>
+                <area shape="rect" id="abc5area" class="abc1" coords="" alt="abc5" onclick="getabc5()"><area>
+                <area shape="rect" id="abc6area" class="abc1" coords="" alt="abc6" onclick="getabc6()"><area>
+                <area shape="rect" id="abc7area" class="abc1" coords="" alt="abc7" onclick="getabc7()"><area>
+                <area shape="rect" id="abc8area" class="abc1" coords="" alt="abc8" onclick="getabc8()"><area>
+                <area shape="rect" id="abc9area" class="abc1" coords="" alt="abc9" onclick="getabc9()"><area>
+                <area shape="rect" id="abc10area" class="abc1" coords="" alt="abc10" onclick="getabc10()"><area>
   <p class="abc-1" id="abc1statusresult">ABC-1</p>
   <p class="abc-2" id="abc2statusresult">ABC-2</p>
   <p class="abc-3" id="abc3statusresult">ABC-3</p>

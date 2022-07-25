@@ -106,6 +106,13 @@ con.query(system1, function (err, result) {
     console.log("system1 table connected");
 })
 
+
+var system1history = "CREATE TABLE IF NOT EXISTS system1history (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
+con.query(system1history, function (err, result) {
+    if (err) throw err;
+    console.log("system1history table connected");
+})
+
 var systems = "CREATE TABLE IF NOT EXISTS systems (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
 con.query(systems, function (err, result) {
     if (err) throw err;
@@ -143,208 +150,117 @@ app.get('/dbdata', function(req, res) {
 })
 
 app.get('/getabc1', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc1'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc1'"
     console.log("get abc1");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc1';
         res.send(results);
     })
 })
 
 app.get('/getabc2', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc2'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc2'"
     console.log("get abc2")
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc2';
         res.send(results);
     })
 })
 
 app.get('/getabc3', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc3'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc3'"
     console.log("get abc3");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc3';
         res.send(results);
     })
 })
 
 app.get('/getabc4', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc4'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc4'"
     console.log("get abc4");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc4';
         res.send(results);
     })
 })
 
 app.get('/getabc5', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc5'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc5'"
     console.log("get abc5");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc5';
         res.send(results);
     })
 })
 
 app.get('/getabc6', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc6'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc6'"
     console.log("get abc6");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc6';
         res.send(results);
     })
 })
 
 app.get('/getabc7', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc7'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc7'"
     console.log("get abc7");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc7';
         res.send(results);
     })
 })
 
 app.get('/getabc8', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc8'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc8'"
     console.log("get abc8");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc8';
         res.send(results);
     })
 })
 
 app.get('/getabc9', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc9'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc9'"
     console.log("get abc9");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc9';
         res.send(results);
     })
 })
 
 app.get('/getabc10', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc10'"
+    let sql = "SELECT * FROM wafs WHERE valve = 'abc10'"
     console.log("get abc10");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
+        results[0].id_valve = 'abc10';
         res.send(results);
     })
 })
-
-app.get('/getabc11', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc11'"
-    console.log("get abc11");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc12', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc12'"
-    console.log("get abc12");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc13', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc13'"
-    console.log("get abc13");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc14', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc14'"
-    console.log("get abc14");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc15', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc15'"
-    console.log("get abc15");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc16', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc16'"
-    console.log("get abc16");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc17', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc17'"
-    console.log("get abc17");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc18', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc18'"
-    console.log("get abc18");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc19', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc19'"
-    console.log("get abc19");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
-app.get('/getabc20', function(req, res) {
-    let sql = "SELECT * FROM system1 WHERE valve = 'abc20'"
-    console.log("get abc20");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
-
 
 app.get('/system1valves', async (req, res) => {
-    let sql = "SELECT * FROM system1"
+    let sql = "SELECT * FROM valves where system = 'system1'"
     con.query (sql, (error, results, fields) => {
         if (error) throw error;
         console.log(results);
@@ -443,7 +359,7 @@ app.post("/login", async (req, res)=> {
     
 app.post('/system1wafs', async (req, res) => {
     const valve = req.body.valve
-    const sqlSearch = "SELECT * FROM system1 where valve = ?"
+    const sqlSearch = "SELECT * FROM system1wafs where valve = ?"
     const search_query = mysql.format(sqlSearch,[valve])
 
     await con.query(search_query, async (error, results) => {
@@ -517,13 +433,14 @@ app.post('/systemlookup', async (req, res) => {
         console.log(req.body);
         const valve = req.body.valve;
         const status = req.body.status;
-        const sqlSearch = "SELECT * FROM system1 WHERE valve = ?"
+        console.log(valve)
+        const sqlSearch = "SELECT * FROM valves WHERE valve = ?"
         const search_query = mysql.format(sqlSearch,[valve])
-        const sqlInsert = "INSERT INTO system1 VALUES (?,?)"
+        const sqlInsert = "INSERT INTO valves VALUES (?,?)"
         const sqlInsertHistory =  "INSERT INTO system1history (valve, status) VALUES (?,?)"
         const insert_query = mysql.format(sqlInsert,[valve, status])
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status])
-        const sqlUpdate = "UPDATE `system1` SET `status` = ? WHERE `valve`= ?"
+        const sqlUpdate = "UPDATE `valves` SET `status` = ? WHERE `valve`= ?"
         const update_query = mysql.format(sqlUpdate,[status, valve])
         await con.query (search_query, async (err, result) => {
             if (err) throw (err)
@@ -531,16 +448,6 @@ app.post('/systemlookup', async (req, res) => {
             console.log(result.length)
             if (result.length == 0) {
                 console.log("valve not found: " + valve)
-                console.log("creating new line")
-                await con.query (insert_query, (err, result) => {
-                    if (err) throw (err)
-                    console.log ("Created new valve " + valve)
-                    console.log(result.insertId)
-                })
-                await con.query (insertHistory_query, (err, result) => {
-                    if (err) throw (err)
-                    console.log("Adding history")
-                })
                 res.redirect("/system1")
             } else {
                 console.log("initiating update")
@@ -563,9 +470,9 @@ app.post('/systemlookup', async (req, res) => {
         console.log(req.body);
         const valve = req.body.valve;
         const waf = req.body.waf;
-        const sqlSearch = "SELECT * FROM system1wafs WHERE valve = ?"
-        const search_query = mysql.format(sqlSearch,[valve])
-        const sqlDelete = "DELETE FROM system1wafs WHERE valve = ? AND waf = ?"
+        const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
+        const search_query = mysql.format(sqlSearch,[waf])
+        const sqlDelete = "UPDATE FROM valves WHERE valve = ? AND waf = ?"
         const delete_query = mysql.format(sqlDelete,[valve, waf])
         await con.query (sqlSearch, async (err, result) => {
             if (err) throw (err)
@@ -581,7 +488,7 @@ app.post('/systemlookup', async (req, res) => {
                     console.log ("deleting waf " + waf + " on valve " + valve)
                     console.log(result)
                 }) 
-                res.redirect("/system1")
+                res.send("waf removed")
             }
         })   // end of con.query
     }); // end of app.post

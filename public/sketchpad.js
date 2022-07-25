@@ -47,7 +47,6 @@ function drawDot(ctx,x,y,size) {
     ctx.closePath();
     ctx.fill();
 } 
-
 function tagoutproposal() {
     var proposal = document.getElementById("proposal");
     if(proposal.style.display === "none") {

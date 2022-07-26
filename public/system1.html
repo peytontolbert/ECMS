@@ -133,6 +133,25 @@
     z-index: 8;
 }
 
+.imagee {
+ z-index: -10;
+}
+
+.info {
+  top: 250px;
+  z-index: 19;
+  position: absolute;
+}
+.info2 {
+  top: 200px;
+  z-index: 19;
+  position: absolute;
+}
+.info3 {
+  top: 150px;
+  z-index: 19;
+  position: absolute;
+}
 .system1 {
     position: absolute;
     z-index: 2;
@@ -153,10 +172,22 @@
   </header>
   <a </a>
   <a href="/systems">Systems</a>
-    <div id="valvedata" class="valvedata">
+  <div class="info">
         <form id="statusform" onsubmit="savevalve()">
         </form>
+      </div>
+      <div class="info2">
+        <form id="addwaf" onsubmit="addwaf()">
+          <input id="addwafinput" type="textbox" placeholder="ADD WAF"></input>
+          <input type="submit">
+        </form>
+      </div>
+        <div class="info3">
         <form id="removewaf" onsubmit="removewaf()">
+          <select id="removewaf0">
+            <option id="removewaf00"></option>
+          </select>
+          <input type="submit">
       </form>
     </div>
     <br><br><br>
@@ -171,8 +202,8 @@
     </div>
     <br><p></p><br><p></p>
         <div class="rightside">
-            <div id="div1" class="system1">
-            <img src="images/system1.png" id="p1" alt="System" usemap="#system" width="2628" height="690">
+            <div id="div1">
+            <img src="images/system1.png" id="p1" alt="System" usemap="#system" width="2628" height="690" class="imagee">
             <map name="system">
                 <area shape="rect" id="abc1area" class="abc1" coords="" alt="abc1" onclick="getabc1()"><area>
                 <area shape="rect" id="abc2area" class="abc1" coords="" alt="abc2" onclick="getabc2()"><area>

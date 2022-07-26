@@ -47,6 +47,7 @@ function drawDot(ctx,x,y,size) {
     ctx.closePath();
     ctx.fill();
 } 
+
 function tagoutproposal() {
     var proposal = document.getElementById("proposal");
     if(proposal.style.display === "none") {
@@ -171,51 +172,16 @@ async function getabc10() {
 
 
 async function valvewindow(data) {
-    var clickcount = 0;
     console.log(data)
     var wafdata = data;
     const valve = wafdata[0].id_valve;
     //console.log(JSON.parse(vdata));
-const app = document.getElementById("valvedata");
-if(app.style.display === "block") {
-        const valvewafs = document.getElementById("valvewafs");
-    const statusform = document.getElementById("statusform");
-    const status = document.getElementById("status");
-    const inputvalve = document.getElementById("inputvalve");
-    const formbutton = document.getElementById("formbutton");
-    if(inputvalve.innerHTML === "valve: " + valve) { 
-        console.log("clicked same valve")
-        return;
-    } else {
-        console.log("clicked different valve")
-    const statusform = document.getElementById("statusform");
-    newvalvewafs = document.createElement("div");
-    newvalvewafs.id = "valvewafs";
-    inputvalve.value = valve;
-    inputvalve.innerHTML = "valve: " + valve;
-    if(wafdata.length !== 0) {
-        console.log(wafdata);
-    for(i=0;i<await wafdata.length;i++) {
-        const inputstuffs = document.createElement("p");
-        inputstuffs.id = "inputstuff" + i;
-        inputstuffs.innerHTML = await wafdata[i].waf; 
-        await newvalvewafs.appendChild(inputstuffs);
-    await statusform.replaceChild(newvalvewafs, valvewafs);
-
-    };
-        } else { 
-            inputstuff.innerHTML = "";
-        }
-    return
-    }
-} else {
-app.style.display = "block";
 console.log("valve window valve: " + valve);
 const statusform = document.getElementById("statusform");
-const removewafform = document.getElementById("removewaf");
-const removewafbutton = document.getElementById("rmvbutton");
 let input = document.createElement("p");
+let removeform = document.getElementById("removewaf0")
 input.id = "inputvalve";
+input.name = valve;
 statusform.appendChild(input);
 inputvalve.innerHTML = "valve: " + valve;
 input.value = valve;
@@ -228,30 +194,22 @@ statusform.appendChild(valvewafs);
 if(wafdata.length !== 0) { 
 for(i=0;i<await wafdata.length;i++) {
     const inputstuffs = document.createElement("p");
+    const removestuffs = document.createElement("option")
     inputstuffs.id = "inputstuff" + i;
-    inputstuffs.innerHTML = await wafdata[i].waf; 
+    removestuffs.id = "removestuff" + i;
+    removestuffs.innerHTML = await wafdata[i].waf;
+    inputstuffs.innerHTML = await wafdata[i].waf;
+    removestuffs.value = removestuffs.innerHTML; 
     valvewafs.appendChild(inputstuffs);
+    removeform.appendChild(removestuffs);
+    
 }
 } else { return };
 
 let btn = document.createElement("button");
-let rmvbtn = document.createElement("input");
-rmvbtn.id = "rmvbutton";
-rmvbtn.type = "submit";
-rmvbtn.value = "Submit";
-rmvbtn.innerHTML = "remove WAF";
-rmvbtn.onclick = removewaf();
 btn.name = "submit";
 btn.id = "formbutton";
-btn.innerHTML = "submit";
-let waflabel = document.createElement("label");
-waflabel.innerHTML = "ADD WAF";
-statusform.appendChild(waflabel);
-let waf = document.createElement("input");
-waf.name = "WAF";
-waf.type = "text";
-waf.id = "inputwaf";
-statusform.appendChild(waf);
+btn.innerHTML = "save status";
 let newline2 = document.createElement("P");
 statusform.appendChild(newline2);
 let statuslabel = document.createElement("label");
@@ -283,23 +241,6 @@ btn.onsubmit = savevalve();
 statusform.appendChild(btn);
 let newline = document.createElement("P")
 statusform.appendChild(newline);
-
-let rmvlabel = document.createElement("label");
-rmvlabel.innerHTML = "REMOVE WAF/WORK";
-removewafform.appendChild(rmvlabel);
-let removeselect = document.createElement("select");
-removeselect.id = "removeselect";
-removewafform.appendChild(removeselect);
-let empty2 = document.createElement("option");
-removeselect.appendChild(empty2);
-for(i=0; i < await wafdata.length; i++) {
-    let removeoption = document.createElement("option");
-    removeoption.value = wafdata[i].waf;
-    removeoption.innerHTML = wafdata[i].waf;
-    removeselect.appendChild(removeoption)
-};
-rmvbtn.onsubmit = removewaf();
-removewafform.appendChild(rmvbtn);
 }
 /*const para = document.createElement("p");
 const node = document.createTextNode("This is new.");
@@ -312,32 +253,50 @@ element.insertBefore(para, child);
 element.className = 'abc1';
 */
 
+
+async function addwaf() {
+    console.log("add waf");
+    let waf = document.getElementById("addwafinput");
+    let inputvalve = document.getElementById("inputvalve");
+    let valve = inputvalve.name;
+    if(waf.value !== "" ) {
+        let data = { "valve": valve, "waf": waf.value };
+        console.log("add waf: " + data);
+        await fetch("/addwaf", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(res => {
+            console.log("Request complete! response:", res);
+        })
+    }
 }
 
-function removewaf() {
-    console.log("removingwaf")
-    return;
-    let valve = document.getElementById("inputvalve").innerHTML;
-    let waf = document.getElementById("removeselect");
-    console.log(data)
-    if(waf.value !== "") {
-        let data = { "valve": valve.value, "waf": waf.value}
-        fetch("/removewaf", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-    }).then(res => {
-        console.log("deleted waf ", res);
-    });
-} else { }
-};
+async function removewaf() {
+    console.log("remove waf");
+    let waf = document.getElementById("removewaf0");
+    let inputvalve = document.getElementById("inputvalve");
+    let valve = inputvalve.name;
+    if(waf.value !== "" ) {
+        let data = { "valve": valve, "waf": waf.value };
+        console.log("remove waf: " + data);
+        await fetch("/removewaf", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(res => {
+            console.log("Request complete! response:", res);
+        })
+    }
+}
 
 async function savevalve() {
+    console.log("savevalve");
     let status = document.getElementById("status");
     let valve = document.getElementById("inputvalve");
     var waf = document.getElementById("inputwaf");
     if(status.value !== "" ) {
-    let data = { "valve": valve.value, "status": status.value, "waf": waf.value };
+    let data = { "valve": valve.value, "status": status.value };
     console.log(data);
     await fetch("/savevalve", {
         method: "POST",

@@ -12,6 +12,7 @@ const multer = require('multer');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const { isBuffer } = require('util');
 
 var app = express();
 var uploadstorage = multer.diskStorage({ 
@@ -437,9 +438,9 @@ app.post('/systemlookup', async (req, res) => {
         const sqlSearch = "SELECT * FROM valves WHERE valve = ?"
         const search_query = mysql.format(sqlSearch,[valve])
         const sqlInsert = "INSERT INTO valves VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO system1history (valve, status) VALUES (?,?)"
+        const sqlInsertHistory =  "INSERT INTO system1history (valve, status, action) VALUES (?,?,?)"
         const insert_query = mysql.format(sqlInsert,[valve, status])
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status])
+        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status, "changed status"])
         const sqlUpdate = "UPDATE `valves` SET `status` = ? WHERE `valve`= ?"
         const update_query = mysql.format(sqlUpdate,[status, valve])
         await con.query (search_query, async (err, result) => {
@@ -465,32 +466,48 @@ app.post('/systemlookup', async (req, res) => {
             }
         })   // end of con.query
     }); // end of app.post
-        
+    
+    app.post("/addwaf", async(req,res) => {
+        console.log(req.body);
+        const waf = req.body.waf;
+        const valve = req.body.valve;
+        const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
+        const search_query = mysql.format(sqlSearch,[waf])
+        const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
+        const sqlInsertHistory =  "INSERT INTO system1history (valve, waf, action) VALUES (?,?,?)"
+        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
+        const insert_query = mysql.format(sqlInsert,[waf, valve])
+        await con.query(insert_query, (err, result) => {
+            if (err) throw err;
+            console.log(result)
+        })
+        await con.query(insertHistory_query, (err, result) => {
+            if (err) throw err;
+            console.log(result)
+        })
+        res.send("valve added");
+    })
+
     app.post("/removewaf", async (req,res) => {
         console.log(req.body);
         const valve = req.body.valve;
         const waf = req.body.waf;
         const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
         const search_query = mysql.format(sqlSearch,[waf])
-        const sqlDelete = "UPDATE FROM valves WHERE valve = ? AND waf = ?"
+        const sqlInsertHistory =  "INSERT INTO system1history (valve, waf, action) VALUES (?,?,?)"
+        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "deleted waf"])
+        const sqlDelete = "DELETE FROM wafs WHERE valve = ? AND waf = ?"
         const delete_query = mysql.format(sqlDelete,[valve, waf])
-        await con.query (sqlSearch, async (err, result) => {
-            if (err) throw (err)
-            console.log("search results")
-            console.log(result.length)
-            if (result.length == 0) {
-                console.log("valve and waf not found " + valve + waf)
-                res.send("valve+waf does not exist");
-            } else {
-                console.log("initiating update")
+        await con.query(insertHistory_query, (err, result) => {
+            if (err) throw err;
+            console.log(result)
+        })
                 await con.query (delete_query, (err, result, row, fields) => {
                     if (err) throw (err)
                     console.log ("deleting waf " + waf + " on valve " + valve)
                     console.log(result)
                 }) 
                 res.send("waf removed")
-            }
-        })   // end of con.query
     }); // end of app.post
         
 app.post("/register", async (req,res) => {

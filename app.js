@@ -255,8 +255,16 @@ app.get('/getabc10', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc10';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc10", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc10';
+            res.send(results);
+        }
     })
 })
 

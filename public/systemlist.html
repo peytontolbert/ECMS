@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      
+.image {
+    top: 200px;
+    position: absolute;
+    z-index: 2;
+    margin-left:10px;
+}
+    </style>
+    <script src="systemlist.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>
+        <a href="/systems">Home</a>
+      </h1>
+    <div id="systemlist">
+        <h1>systems:</h1>
+        <select id="systemselect">
+        <option id="blank"></option>
+        </select>
+        <button onclick=systemLookup()>load</button>
+    </div>
+    <div id="systemloaded" class="image">
+    <img id="canvas" usemap="#system" src="/images/system0.png" class="image">
+    <map id="systemmap" name="system" class="image"></map>
+  </div>
+    <div id="valvedata"></div>
+  <div>
+  <canvas id="sketchpad" height="2000" width="2800">
+  </canvas>
+</div>
+    <script src="systemsketchpad.js" type="text/javascript"></script>
+  </body>
+</html>

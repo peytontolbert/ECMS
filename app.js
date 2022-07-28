@@ -74,6 +74,10 @@ app.get('/systems', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/systems.html'));
 });
 
+app.get('/systemlist', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/systemlist.html'));
+});
+
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
@@ -114,7 +118,7 @@ con.query(system1history, function (err, result) {
     console.log("system1history table connected");
 })
 
-var systems = "CREATE TABLE IF NOT EXISTS systems (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
+var systems = "CREATE TABLE IF NOT EXISTS systems (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL)";
 con.query(systems, function (err, result) {
     if (err) throw err;
     console.log("systems table connected");
@@ -140,6 +144,16 @@ app.get('/system1valvedata', function(req, res) {
     })
 });
 
+app.get('/systemlistsearch', function(req, res) {
+    let sql = "SELECT * FROM systems"
+    console.log("system search");
+    con.query (sql, (error, results) => {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    })
+})
+
 
 app.get('/dbdata', function(req, res) {
     let sql = "SELECT * FROM dbdata"
@@ -156,19 +170,35 @@ app.get('/getabc1', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc1';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc1", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc1';
+            res.send(results);
+        }
     })
 })
 
 app.get('/getabc2', function(req, res) {
     let sql = "SELECT * FROM wafs WHERE valve = 'abc2'"
-    console.log("get abc2")
+    console.log("get abc2");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc2';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc2", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc2';
+            res.send(results);
+        }
     })
 })
 
@@ -178,19 +208,35 @@ app.get('/getabc3', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc3';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc3", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc3';
+            res.send(results);
+        }
     })
 })
 
 app.get('/getabc4', function(req, res) {
     let sql = "SELECT * FROM wafs WHERE valve = 'abc4'"
-    console.log("get abc4");
+    console.log("get abc9");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc4';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc4", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc4';
+            res.send(results);
+        }
     })
 })
 
@@ -200,8 +246,16 @@ app.get('/getabc5', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc5';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc5", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc5';
+            res.send(results);
+        }
     })
 })
 
@@ -211,8 +265,16 @@ app.get('/getabc6', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc6';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc6", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc6';
+            res.send(results);
+        }
     })
 })
 
@@ -222,8 +284,16 @@ app.get('/getabc7', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc7';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc7", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc7';
+            res.send(results);
+        }
     })
 })
 
@@ -233,8 +303,16 @@ app.get('/getabc8', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc8';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc8", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc8';
+            res.send(results);
+        }
     })
 })
 
@@ -244,10 +322,19 @@ app.get('/getabc9', function(req, res) {
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
-        results[0].id_valve = 'abc9';
-        res.send(results);
+        if (results.length === 0) {
+            console.log("no wafs found")
+            results = [{ "valve": "abc9", "waf":"no wafs attached" }]
+            console.log(results)
+            res.send(results);
+        } else {
+            console.log("waf found");
+            results[0].id_valve = 'abc9';
+            res.send(results);
+        }
     })
 })
+
 
 app.get('/getabc10', function(req, res) {
     let sql = "SELECT * FROM wafs WHERE valve = 'abc10'"
@@ -386,10 +473,9 @@ app.post('/system1wafs', async (req, res) => {
 })
 
 app.post('/systemlookup', async (req, res) => {
-    
     const system = req.body.system;
     console.log(req.body.system)
-    const sqlSearch = "SELECT * FROM systems where id = ?"
+    const sqlSearch = "SELECT * FROM valves where system = ?"
     const search_query = mysql.format(sqlSearch,[system])
 
     await con.query(search_query, async (error, results) => {
@@ -398,9 +484,26 @@ app.post('/systemlookup', async (req, res) => {
             console.log("system not found");
             console.log(results);
             res.send(results);
+        } else {
+        console.log(results)
+        res.send(results);
         }
-        else {
-            const systemSearch = "SELECT * FROM {"
+    })
+})
+
+app.post('/systemload', async (req, res) => {
+    const system = req.body.system;
+    console.log(req.body.system);
+    const sqlSearch = "SELECT * FROM valves where system = ?"
+    const search_query = mysql.format(sqlSearch,[system])
+console.log(sqlSearch)
+    await con.query(search_query, async (error, results) => {
+        if (error) throw error;
+        if (results.length == 0) {
+            console.log("system not found");
+            console.log(results);
+            res.send(results);
+        } else {
         console.log(results)
         res.send(results);
         }

@@ -52,6 +52,10 @@ app.get('/login', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/login.html'));
 });
 
+app.get('/about', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/about.html'));
+});
+
 app.get('/newdiagram', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/newdiagram.html'));
 });
@@ -76,6 +80,10 @@ app.get('/systems', function(request, response) {
 
 app.get('/systemlist', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/systemlist.html'));
+});
+
+app.get('/dbmanagement', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/dbmanagement.html'));
 });
 
 app.use('/index', indexRouter);
@@ -105,17 +113,11 @@ con.query(employees, function (err, result) {
     console.log("users table connected");
 })
 
-var system1 = "CREATE TABLE IF NOT EXISTS system1 (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
-con.query(system1, function (err, result) {
-    if (err) throw err;
-    console.log("system1 table connected");
-})
 
-
-var system1history = "CREATE TABLE IF NOT EXISTS system1history (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
-con.query(system1history, function (err, result) {
+var systemhistory = "CREATE TABLE IF NOT EXISTS systemhistory (valve varchar(255) NOT NULL PRIMARY KEY, status varchar(255) NOT NULL, username varchar(255) NOT NULL)";
+con.query(systemhistory, function (err, result) {
     if (err) throw err;
-    console.log("system1history table connected");
+    console.log("systemhistory table connected");
 })
 
 var systems = "CREATE TABLE IF NOT EXISTS systems (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL)";
@@ -124,19 +126,15 @@ con.query(systems, function (err, result) {
     console.log("systems table connected");
 })
 
-app.get('/system1historydata', function(req, res) {
-    let sql = "SELECT * FROM system1history"
-    console.log("get system1history");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-});
+var wafs = "CREATE TABLE IF NOT EXISTS wafs (id int NOT NULL PRIMARY KEY, waf varchar(255) NOT NULL, valve varchar(255) NOT NULL)";
+con.query(wafs, function (err, result) {
+    if (err) throw err;
+    console.log("wafs table connected");
+})
 
-app.get('/system1valvedata', function(req, res) {
-    let sql = "SELECT * FROM system1"
-    console.log("get system1 valve data");
+app.get('/systemhistorydata', function(req, res) {
+    let sql = "SELECT * FROM systemhistory"
+    console.log("get systemhistory");
     con.query (sql, (error, results) => {
         if (error) throw error;
         console.log(results);
@@ -355,14 +353,6 @@ app.get('/getabc10', function(req, res) {
     })
 })
 
-app.get('/system1valves', async (req, res) => {
-    let sql = "SELECT * FROM valves where system = 'system1'"
-    con.query (sql, (error, results, fields) => {
-        if (error) throw error;
-        console.log(results);
-        res.send(results);
-    })
-})
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username
@@ -392,43 +382,6 @@ app.post("/login", async (req, res)=> {
      }) //end of connection.query()
     }) //end of app.post()
 
-    app.post("/savesystem1", async (req,res) => {
-        console.log(req.body);
-        const username = req.body.username;
-        const status = req.body.status;
-        const valve = req.body.valve;
-        const sqlSearch = "SELECT * FROM system1 WHERE valve = ?"
-        const search_query = mysql.format(sqlSearch,[valve])
-        const sqlInsert = "INSERT INTO system1 VALUES (?,?,?)"
-        const insert_query = mysql.format(sqlInsert,[valve, status, username])
-        const sqlUpdate = "UPDATE `system1` SET `status` = ?, `username` = ? WHERE `valve`= ?"
-        const update_query = mysql.format(sqlUpdate,[status, username, valve])
-        await con.query (search_query, async (err, result) => {
-            if (err) throw (err)
-            console.log("search results")
-            console.log(result.length)
-            if (result.length == 0) {
-                console.log("valve not found: " + valve)
-                console.log("creating new line")
-                await con.query (insert_query, (err, result) => {
-                    if (err) throw (err)
-                    console.log ("Created new valve " + valve)
-                    console.log(result.insertId)
-                    res.redirect("/system1")
-                })
-            } else {
-                console.log("initiating update")
-                await con.query (update_query, (err, result, row, fields) => {
-                    if (err) throw (err)
-                    console.log ("Updating valve " + valve)
-                    console.log(result)
-                    console.log(row)
-                    res.redirect("/system1")
-                })
-            }
-        })   // end of con.query
-    }); // end of app.post
-
     
     app.post("/submitnewvalve", async (req,res) => {
         console.log(req.body);
@@ -440,7 +393,6 @@ app.post("/login", async (req, res)=> {
         const search_query = mysql.format(sqlSearch,[system])
         const sqlInsert = "INSERT INTO newvalves VALUES (?,?,?,?)"
         const insert_query = mysql.format(sqlInsert,[system, valve, x, y])
-        const sqlUpdate = "UPDATE `system1` SET `status` = ?, `username` = ? WHERE `valve`= ?"
         await con.query (search_query, async (err, result) => {
             if (err) throw (err)
                 await con.query (insert_query, (err, result) => {
@@ -453,9 +405,9 @@ app.post("/login", async (req, res)=> {
     }); // end of app.post
 
     
-app.post('/system1wafs', async (req, res) => {
+app.post('/systemwafs', async (req, res) => {
     const valve = req.body.valve
-    const sqlSearch = "SELECT * FROM system1wafs where valve = ?"
+    const sqlSearch = "SELECT * FROM wafs where valve = ?"
     const search_query = mysql.format(sqlSearch,[valve])
 
     await con.query(search_query, async (error, results) => {
@@ -482,6 +434,23 @@ app.post('/systemlookup', async (req, res) => {
         if (error) throw error;
         if (results.length == 0) {
             console.log("system not found");
+            console.log(results);
+            res.send(results);
+        } else {
+        console.log(results)
+        res.send(results);
+        }
+    })
+})
+
+app.post('/valvelookup', async (req, res) => {
+    const valve = req.body.valve;
+    const sqlSearch = "SELECT * FROM wafs where valve = ?"
+    const search_query = mysql.format(sqlSearch,[valve])
+    await con.query(search_query, async (error, results) => {
+        if (error) throw error;
+        if (results.length == 0) {
+            console.log("valve not found");
             console.log(results);
             res.send(results);
         } else {
@@ -549,7 +518,7 @@ console.log(sqlSearch)
         const sqlSearch = "SELECT * FROM valves WHERE valve = ?"
         const search_query = mysql.format(sqlSearch,[valve])
         const sqlInsert = "INSERT INTO valves VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO system1history (valve, status, action) VALUES (?,?,?)"
+        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, status, action) VALUES (?,?,?)"
         const insert_query = mysql.format(sqlInsert,[valve, status])
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status, "changed status"])
         const sqlUpdate = "UPDATE `valves` SET `status` = ? WHERE `valve`= ?"
@@ -560,7 +529,7 @@ console.log(sqlSearch)
             console.log(result.length)
             if (result.length == 0) {
                 console.log("valve not found: " + valve)
-                res.redirect("/system1")
+                res.redirect("/systemlist")
             } else {
                 console.log("initiating update")
                 await con.query (update_query, (err, result, row, fields) => {
@@ -573,7 +542,7 @@ console.log(sqlSearch)
                     if (err) throw (err)
                     console.log("Adding history")
                 })
-                res.redirect("/system1")
+                res.redirect("/systemlist")
             }
         })   // end of con.query
     }); // end of app.post
@@ -585,7 +554,7 @@ console.log(sqlSearch)
         const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
         const search_query = mysql.format(sqlSearch,[waf])
         const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO system1history (valve, waf, action) VALUES (?,?,?)"
+        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
         const insert_query = mysql.format(sqlInsert,[waf, valve])
         await con.query(insert_query, (err, result) => {
@@ -600,12 +569,12 @@ console.log(sqlSearch)
     })
 
     app.post("/removewaf", async (req,res) => {
-        console.log(req.body);
+        console.log("remove waf");
         const valve = req.body.valve;
         const waf = req.body.waf;
         const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
         const search_query = mysql.format(sqlSearch,[waf])
-        const sqlInsertHistory =  "INSERT INTO system1history (valve, waf, action) VALUES (?,?,?)"
+        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "deleted waf"])
         const sqlDelete = "DELETE FROM wafs WHERE valve = ? AND waf = ?"
         const delete_query = mysql.format(sqlDelete,[valve, waf])

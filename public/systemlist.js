@@ -1,10 +1,10 @@
 async function systemsearch() {
-    const data = await fetch('./systemlistsearch').then(response => (response.json())).then(data => displayData(data));
+    const data = await fetch('./systemlistsearch').then(response => (response.json())).then(data => displaySystems(data));
     }
 
 
     
-async function displayData(data) {
+async function displaySystems(data) {
     var systemlist = document.getElementById("systemlist");
     var systemselect = document.getElementById("systemselect");
     console.log(data)
@@ -37,13 +37,19 @@ async function systemLookup() {
 
 async function loadsystem(data) {
     let systemdata = data;
+    console.log(systemdata);
     for(i=0;i<systemdata.length;i++) {
         const valvedata = document.getElementById('systemloaded');
+        const valveselected = document.getElementById('valveselected');
         const systemmap = document.getElementById('systemmap');
         const valve = systemdata[i].valve;
         const coords = systemdata[i].coords;
         const newvalve = document.createElement('p');
         newvalve.innerHTML = valve;
+        const newvalveoption = document.createElement('option')
+        newvalveoption.value = valve;
+        newvalveoption.innerHTML = valve;
+        valveselected.appendChild(newvalveoption);
         const textcoords = coords.split(',')
         newvalve.style.left = textcoords[0]+'px';
         newvalve.style.top = textcoords[1]-30 +'px';
@@ -68,12 +74,75 @@ async function loadsystem(data) {
 
     }
     var map = document.getElementById('systemmap');
-    map.addEventListener("click", loadvalve());
+    //map.addEventListener("click", loadvalve());
 }
 
 async function loadvalve() {
     console.log("valve")
+    const valve = document.getElementById("valveselected").value;
+    const valveselected = document.getElementById("valveselectedp");
+    valveselected.innerHTML = valve;
+    if (valve !== "") {
+    let data = { "valve": valve };
+    console.log(data);
+    await fetch("/valvelookup", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => displayWaf(data))
 }
+}
+
+async function changeStatus() {
+    const valve = document.getElementById("valveselected").value;
+    const status = document.getElementById("changestatus").value;
+    console.log("change status");
+    if (valve !== "") {
+    let data = { "valve": valve, "status": status };
+    console.log(data);
+    await fetch("/savevalve", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(response => response.json()).then(data => console.log(data))
+}
+}
+
+async function displayWaf(data) {
+console.log(data);
+for(i=0;i<data.length;i++) {
+    const wafs = document.getElementById('wafinfo');
+    const wafform = document.getElementById('removeWAF');
+    const newwafoption = document.createElement('option');
+    newwafoption.innerHTML = data[i].waf;
+    newwafoption.value = data[i].waf
+    const newwaf = document.createElement('p');
+    newwaf.innerHTML = data[i].waf;
+    wafform.appendChild(newwafoption);
+    wafs.appendChild(newwaf);
+}
+}
+
+
+
+async function removewaf() {
+    console.log("remove waf");
+    let waf = document.getElementById("removeWAF").value;
+    console.log(waf);
+    let valve = document.getElementById("valveselectedp").innerHTML;
+    if(waf.value !== "" ) {
+        let data = { "valve": valve, "waf": waf };
+        console.log(data);
+        await fetch("/removewaf", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        }).then(res => {
+            console.log("Request complete! response:", res);
+        })
+    }
+}
+
 
 function init() {
     systemsearch();

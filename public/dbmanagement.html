@@ -1,0 +1,30 @@
+
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset = "UTF-8">
+	<title> My Form </title>
+	<style>
+		#mylink{
+			font-size: 25px;
+		}
+	</style>
+</head>
+<body align='center'>
+        <header>
+		<h1>DB Management</h1>
+		<a>Select system: </a>
+		<select name="system" id="system">
+			<option value=""></option>
+		</select>
+		<button onclick=systemsearch()>Submit</button>
+		<br>
+	</header>
+	<p id="systemdata"></p>
+	<p id="systemsearched"></p>
+	<p id="valvedata"></p>
+
+<script src="dbmanagement.js"></script>
+</body>
+</html>

@@ -63,35 +63,6 @@ export async function rendervalves() {
     }
 }
 
-export async function statuscheck() {
-let x = document.getElementById("tagstatus");
-if (abc1status == "Danger_Tag_open") {
-    document.getElementById("statusresult").style.color = "green";
-    console.log(abc1status);
-    console.log("danger open");
-    return;
-  } else if (abc1status == "Untagged") {
-    document.getElementById("statusresult").style.color = "black";
-    console.log(abc1status);
-    console.log("untagged");
-    return;
-} else if (abc1status == "Danger_Tag_shut") {
-    document.getElementById("statusresult").style.color = 'red';
-    console.log(abc1status);
-    console.log("danger shut");
-    return;
-} else if (abc1status == "Caution_Tag") {
-    document.getElementById("statusresult").style.color = 'yellow';
-    console.log(abc1status);
-    console.log("caution");
-    return;
-} else {
-  document.getElemenyById("statusresult").style.color = "silver";
-  console.log(x);
-  return;
-}
-}
-
 rendervalves();
 renderabc2();
 renderabc3();

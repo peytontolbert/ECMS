@@ -92,7 +92,7 @@ app.use('/users', usersRouter);
 var con = mysql.createConnection({
   host: "72.218.151.51",
   user: "root",
-  password: "1234",
+  password: "4321",
   database: "pinboards",
 })
 

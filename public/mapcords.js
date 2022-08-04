@@ -43,7 +43,12 @@ async function submitDiagram() {
 }
 
 async function submitValve() {
-    let data = { "system": system.value, "valve": valve.value, "x": firstbox.value, "y": secondbox.value }
+    let x = firstbox.value;
+    let x1 = x.split(" ");
+    let y = secondbox.value;
+    let y1 = y.split(" ");
+    let coords = x1[0] + "," + x1[1] + "," + y1[0] + "," + y1[1]
+    let data = { "system": system.value, "valve": valve.value, "coords": coords }
     console.log(data);
     await fetch("/submitnewvalve", {
         method: 'POST',

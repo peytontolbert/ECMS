@@ -37,11 +37,6 @@ async function systemsearch() {
 
 
 async function displayData(data) {
-    let newvalve = document.createElement('p')
-    newvalve.id = "valvename"
-    valvedata.appendChild(newvalve);
-    console.log(data)
-    newvalve.innerHTML = await data[0].valve;
     for(i=0;i<data.length;i++) {
         let newinfo = document.createElement('p');
         htmlwafdata.appendChild(newinfo);
@@ -51,9 +46,16 @@ async function displayData(data) {
 
 
 async function displaysystemData(data) {
-    var systemresponse = await fetch("/system1valvedata", {
-        method: "GET"
-      }).then(response => (response.json().then(data => systemdata.innerHTML = JSON.stringify(data))))
+    console.log(data)
+    let system = document.createElement('p');
+    systemdata.appendChild(system)
+    system.innerHTML = data[0].system;
+    
+    for(i=0;i<data.length;i++) {
+        let newvalve = document.createElement('p');
+        valvedata.appendChild(newvalve);
+        newvalve.innerHTML = data[i].valve + " " + data[i].status;
+    }
 }
 
 var valve = document.getElementById("valve");

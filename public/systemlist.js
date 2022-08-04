@@ -36,7 +36,7 @@ async function systemLookup() {
 }
 
 async function loadsystem(data) {
-    let systemdata = data;
+    let systemdata = await data;
     console.log(systemdata);
     for(i=0;i<systemdata.length;i++) {
         const valvedata = document.getElementById('systemloaded');
@@ -45,7 +45,9 @@ async function loadsystem(data) {
         const valve = systemdata[i].valve;
         const coords = systemdata[i].coords;
         const newvalve = document.createElement('p');
+        console.log(valve);
         newvalve.innerHTML = valve;
+        newvalve.id = valve;
         const newvalveoption = document.createElement('option')
         newvalveoption.value = valve;
         newvalveoption.innerHTML = valve;

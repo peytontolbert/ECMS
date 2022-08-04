@@ -132,6 +132,20 @@ con.query(wafs, function (err, result) {
     console.log("wafs table connected");
 })
 
+
+
+var valves = "CREATE TABLE IF NOT EXISTS valves (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, valve varchar(255) NOT NULL, coords varchar(255))";
+con.query(valves, function (err, result) {
+    if (err) throw err;
+    console.log("valves table connected");
+})
+
+var newvalves = "CREATE TABLE IF NOT EXISTS newvalves (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, valve varchar(255) NOT NULL, coords varchar(255))";
+con.query(newvalves, function (err, result) {
+    if (err) throw err;
+    console.log("new valves table connected");
+})
+
 app.get('/systemhistorydata', function(req, res) {
     let sql = "SELECT * FROM systemhistory"
     console.log("get systemhistory");
@@ -386,13 +400,12 @@ app.post("/login", async (req, res)=> {
     app.post("/submitnewvalve", async (req,res) => {
         console.log(req.body);
         const system = req.body.system;
-        const x = req.body.x;
-        const y = req.body.y;
+        const coords = req.body.coords;
         const valve = req.body.valve;
         const sqlSearch = "SELECT * FROM systems WHERE system = ?"
         const search_query = mysql.format(sqlSearch,[system])
-        const sqlInsert = "INSERT INTO newvalves VALUES (?,?,?,?)"
-        const insert_query = mysql.format(sqlInsert,[system, valve, x, y])
+        const sqlInsert = "INSERT INTO valves (system, valve, coords) VALUES (?,?,?)"
+        const insert_query = mysql.format(sqlInsert,[system, valve, coords])
         await con.query (search_query, async (err, result) => {
             if (err) throw (err)
                 await con.query (insert_query, (err, result) => {
@@ -551,12 +564,21 @@ console.log(sqlSearch)
         console.log(req.body);
         const waf = req.body.waf;
         const valve = req.body.valve;
-        const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
-        const search_query = mysql.format(sqlSearch,[waf])
+        const sqlSearch = "SELECT * FROM wafs WHERE waf = ? AND valve = ?"
+        const search_query = mysql.format(sqlSearch,[waf, valve])
         const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
         const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
         const insert_query = mysql.format(sqlInsert,[waf, valve])
+        await con.query (search_query, async (err, result) => {
+            if (err) throw (err)
+            console.log("------> Search Results")
+            console.log(result.length)
+            if (result.length != 0) {
+             console.log("------> waf already exists: " + valve)
+             res.sendStatus(409) 
+            } 
+            else {
         await con.query(insert_query, (err, result) => {
             if (err) throw err;
             console.log(result)
@@ -566,6 +588,8 @@ console.log(sqlSearch)
             console.log(result)
         })
         res.send("valve added");
+    }
+})
     })
 
     app.post("/removewaf", async (req,res) => {

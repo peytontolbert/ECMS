@@ -22,23 +22,6 @@ function drawDot(ctx,x,y,size) {
     ctx.fill();
 } 
 
-async function addwaf() {
-    console.log("add waf");
-    let waf = document.getElementById("addWAF");
-    let inputvalve = document.getElementById("valveselected");
-    let valve = inputvalve.value;
-    if(waf.value !== "" ) {
-        let data = { "valve": valve, "waf": waf.value };
-        console.log("add waf: " + data);
-        await fetch("/addwaf", {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        }).then(res => {
-            console.log("Request complete! response:", res);
-        })
-    }
-}
 
 async function savevalve() {
     console.log("savevalve");

@@ -10,6 +10,12 @@
     z-index: 2;
     margin-left:10px;
 }
+#canvas2 {
+  top: 200px;
+  left: 50px;
+  z-index: 20;
+  position: absolute;
+}
     </style>
     <script src="systemlist.js"></script>
   </head>
@@ -45,20 +51,31 @@
       </form>
         <form id="addWAFform">
         <input type="text" name="addWAF" id="addWAF">
-        <button onclick="addwaf()">add WAF</button>
+        <button onclick="addwaf()">Add WAF</button>
       </form>
-      <form id="removeWAFform">
-        <select id="removeWAF">
-          <option></option>
-        </select>
-      <button onclick="removewaf()">remove WAF</button>
     </form>
+      <form id="addWorkform">
+      <input type="text" name="addWork" id="addWork">
+      <button onclick="addwork()">Add Work</button>
+    </form>
+    <form id="removeWAFform">
+      <select id="removeWAF">
+        <option></option>
+      </select>
+    <button onclick="removewaf()">remove WAF</button>
+  </form>
+  <form id="removePermitform">
+    <select id="removePermit">
+      <option></option>
+    </select>
+  <button onclick="removepermit()">remove Permit</button>
+</form>
   <div id="wafinfo">
     <p>WAFs: </p><br>
   </div>
     </div>
     <div id="systemloaded" class="image">
-    <img id="canvas" usemap="#system" src="/images/system0.png" class="image">
+    <img id="canvas" usemap="#system" src="" class="image">
     <map id="systemmap" name="system" class="image"></map>
   </div>
     <div id="valvedata"></div>

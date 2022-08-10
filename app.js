@@ -90,6 +90,7 @@ app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
 var con = mysql.createConnection({
+  multipleStatements: true,
   host: "72.218.151.51",
   user: "root",
   password: "4321",
@@ -138,6 +139,18 @@ var valves = "CREATE TABLE IF NOT EXISTS valves (id int NOT NULL PRIMARY KEY, sy
 con.query(valves, function (err, result) {
     if (err) throw err;
     console.log("valves table connected");
+})
+
+var pipes = "CREATE TABLE IF NOT EXISTS pipes (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, name varchar(255) NOT NULL, edges varchar(255) NOT NULL, status varchar(255), coords varchar(255), shape varchar(255) NOT NULL)";
+con.query(pipes, function (err, result) {
+    if (err) throw err;
+    console.log("pipes table connected");
+})
+
+var components = "CREATE TABLE IF NOT EXISTS components (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, name varchar(255) NOT NULL, edges varchar(255), status varchar(255), coords varchar(255), shape varchar(255) NOT NULL)";
+con.query(components, function (err, result) {
+    if (err) throw err;
+    console.log("components table connected");
 })
 
 var newvalves = "CREATE TABLE IF NOT EXISTS newvalves (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, valve varchar(255) NOT NULL, coords varchar(255))";
@@ -458,8 +471,8 @@ app.post('/systemlookup', async (req, res) => {
 
 app.post('/valvelookup', async (req, res) => {
     const valve = req.body.valve;
-    const sqlSearch = "SELECT * FROM wafs where valve = ?"
-    const search_query = mysql.format(sqlSearch,[valve])
+    const sqlSearch = "SELECT * FROM wafs where valve = ?; SELECT * FROM permits where valve = ?"
+    const search_query = mysql.format(sqlSearch,[valve, valve])
     await con.query(search_query, async (error, results) => {
         if (error) throw error;
         if (results.length == 0) {
@@ -468,18 +481,22 @@ app.post('/valvelookup', async (req, res) => {
             res.send(results);
         } else {
         console.log(results)
-        res.send(results);
+        res.send({"wafs": results[0], "permits": results[1]});
         }
     })
 })
 
 app.post('/systemload', async (req, res) => {
     const system = req.body.system;
+    const valvess = "";
+    const pipess = "";
     console.log(req.body.system);
-    const sqlSearch = "SELECT * FROM valves where system = ?"
-    const search_query = mysql.format(sqlSearch,[system])
+    const sqlSearch = "SELECT * FROM valves where system = ?; SELECT * FROM pipes where system = ?; SELECT * FROM components where system = ?"
+    const sqlpipeSearch = "SELECT * FROM pipes where system = ?"
+    const sqlcompSearch = "SELECT * FROM components where system = ?"
+    const search_query = mysql.format(sqlSearch,[system, system, system])
 console.log(sqlSearch)
-    await con.query(search_query, async (error, results) => {
+    await con.query(search_query, async (error, results, fields) => {
         if (error) throw error;
         if (results.length == 0) {
             console.log("system not found");
@@ -487,7 +504,7 @@ console.log(sqlSearch)
             res.send(results);
         } else {
         console.log(results)
-        res.send(results);
+        res.send({"valves": results[0], "pipes": results[1], "components": results[2]});
         }
     })
 })
@@ -565,7 +582,9 @@ console.log(sqlSearch)
         const waf = req.body.waf;
         const valve = req.body.valve;
         const sqlSearch = "SELECT * FROM wafs WHERE waf = ? AND valve = ?"
+        const permitsqlSearch = " SELECT * FROM permits WHERE valve = ?"
         const search_query = mysql.format(sqlSearch,[waf, valve])
+        const permitsearch_query = mysql.format(permitsqlSearch,[valve])
         const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
         const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
         const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
@@ -576,18 +595,72 @@ console.log(sqlSearch)
             console.log(result.length)
             if (result.length != 0) {
              console.log("------> waf already exists: " + valve)
-             res.sendStatus(409) 
+             res.send("waf exists") 
             } 
-            else {
-        await con.query(insert_query, (err, result) => {
-            if (err) throw err;
-            console.log(result)
-        })
-        await con.query(insertHistory_query, (err, result) => {
-            if (err) throw err;
-            console.log(result)
-        })
-        res.send("valve added");
+            else { 
+                await con.query(permitsearch_query, async(err,result) => {
+                    if (err) throw (err)
+                    if(result.length!=0) {
+                        console.log("permit exists for valve: " + valve)
+                    }
+                    else {
+                        await con.query(insert_query, (err, result) => {
+                            if (err) throw err;
+                            console.log(result)
+                        })
+                        await con.query(insertHistory_query, (err, result) => {
+                            if (err) throw err;
+                            console.log(result)
+                        })
+                        res.send("permit added");
+                    }
+                })
+
+        
+    }
+})
+    })
+
+    app.post("/addwork", async(req,res) => {
+        console.log(req.body);
+        const permit = req.body.permit;
+        const valve = req.body.valve;
+        const sqlSearch = "SELECT * FROM permits WHERE permit = ? AND valve = ?"
+        const wafSearch = "SELECT * FROM wafs WHERE valve = ?"
+        const search_query = mysql.format(sqlSearch,[permit, valve])
+        const wafsearch_query = mysql.format(wafSearch,[valve])
+        const sqlInsert =  "INSERT INTO permits (permit, valve) VALUES (?,?)"
+        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
+        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "added permit"])
+        const insert_query = mysql.format(sqlInsert,[permit, valve])
+        await con.query (search_query, async (err, result) => {
+            if (err) throw (err)
+            console.log("------> Search Results")
+            console.log(result.length)
+            if (result.length != 0) {
+             console.log("------> permit already exists: " + valve)
+             res.send("permit exists") 
+            } 
+            else { 
+                await con.query(wafsearch_query, async(err,result) => {
+                    if (err) throw (err)
+                    if(result.length!=0) {
+                        console.log("waf exists for valve: " + valve)
+                    }
+                    else {
+                        await con.query(insert_query, (err, result) => {
+                            if (err) throw err;
+                            console.log(result)
+                        })
+                        await con.query(insertHistory_query, (err, result) => {
+                            if (err) throw err;
+                            console.log(result)
+                        })
+                        res.send("permit added");
+                    }
+                })
+
+        
     }
 })
     })
@@ -612,6 +685,28 @@ console.log(sqlSearch)
                     console.log(result)
                 }) 
                 res.send("waf removed")
+    }); // end of app.post
+      
+    app.post("/removepermit", async (req,res) => {
+        console.log("remove permit");
+        const valve = req.body.valve;
+        const permit = req.body.permit;
+        const sqlSearch = "SELECT * FROM permits WHERE permit = ?"
+        const search_query = mysql.format(sqlSearch,[permit])
+        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
+        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "deleted permit"])
+        const sqlDelete = "DELETE FROM permits WHERE valve = ? AND permit = ?"
+        const delete_query = mysql.format(sqlDelete,[valve, permit])
+        await con.query(insertHistory_query, (err, result) => {
+            if (err) throw err;
+            console.log(result)
+        })
+                await con.query (delete_query, (err, result, row, fields) => {
+                    if (err) throw (err)
+                    console.log ("deleting permit " + permit + " on valve " + valve)
+                    console.log(result)
+                }) 
+                res.send("permit removed")
     }); // end of app.post
         
 app.post("/register", async (req,res) => {

@@ -14,6 +14,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const { isBuffer } = require('util');
 
+var env = process.env.NODE_ENV || 'production';
+var config = require('./config')[env];
+
+
 var app = express();
 var uploadstorage = multer.diskStorage({ 
                             destination: './uploads/',
@@ -91,10 +95,10 @@ app.use('/users', usersRouter);
 
 var con = mysql.createConnection({
   multipleStatements: true,
-  host: "72.218.151.51",
-  user: "root",
-  password: "4321",
-  database: "pinboards",
+  host: config.mysql.host,
+  user: config.mysql.user,
+  password: config.mysql.password,
+  database: config.mysql.database,
 })
 
 con.connect(function(err) {
@@ -749,5 +753,5 @@ app.get('/home', function(request, response) {
 	response.end();
 });
 
-server.listen(process.env.PORT || 443); 
+server.listen(process.env.PORT || config.server.port); 
 

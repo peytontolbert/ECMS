@@ -8,6 +8,11 @@ Checkout a demo at http://pinboardz.azurewebsites.net (serverless - slow initial
 - Client: HTML5 powered with modern practices
 - Database: MySQL
 - Host: Microsoft Azure Services
+- /systemlist allows viewing of a system with active statuses along with the ability to manipulate valve/component status
+- /systemhistorydata logs all changes performed on system through it's lifetime
+- /systemlookup allows user to search components through the database, excluding visual display
+- /newdiagram allows user to implement new system to database. Includes ability to upload a visual display and label valves/components of a system
+
 
 
 
@@ -22,7 +27,8 @@ Open [http://localhost:555](http://localhost:555) to view it in the browser.
 
 ## Installation
 
-Pinboards requires docker to function
+npm install
+npm start
 
 ## Requirements
 

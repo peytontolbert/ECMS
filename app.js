@@ -753,5 +753,5 @@ app.get('/home', function(request, response) {
 	response.end();
 });
 
-server.listen(process.env.PORT || config.server.port); 
+server.listen(config.server.port); 
 

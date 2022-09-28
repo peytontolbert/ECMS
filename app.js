@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 const mysql = require("mysql");
 var express = require('express');
 var path = require('path');
@@ -8,11 +7,6 @@ var session = require('express-session');
 var logger = require('morgan');
 const http = require("http");
 const multer = require('multer');
-
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-const { isBuffer } = require('util');
 
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config')[env];
@@ -48,10 +42,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
-app.get('/system1', function(request, response) {
-	response.sendFile(path.join(__dirname + '/public/system1.html'));
-});
-
 app.get('/login', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/login.html'));
 });
@@ -77,7 +67,6 @@ app.get('/register', function(request, response) {
 });
 
 
-
 app.get('/systems', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/systems.html'));
 });
@@ -89,9 +78,6 @@ app.get('/systemlist', function(request, response) {
 app.get('/dbmanagement', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/dbmanagement.html'));
 });
-
-app.use('/index', indexRouter);
-app.use('/users', usersRouter);
 
 var con = mysql.createConnection({
   multipleStatements: true,
@@ -136,7 +122,6 @@ con.query(wafs, function (err, result) {
     if (err) throw err;
     console.log("wafs table connected");
 })
-
 
 
 var valves = "CREATE TABLE IF NOT EXISTS valves (id int NOT NULL PRIMARY KEY, system varchar(255) NOT NULL, valve varchar(255) NOT NULL, coords varchar(255))";
@@ -193,219 +178,25 @@ app.get('/dbdata', function(req, res) {
     })
 })
 
-app.get('/getabc1', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc1'"
-    console.log("get abc1");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc1", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc1';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc2', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc2'"
-    console.log("get abc2");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc2", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc2';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc3', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc3'"
-    console.log("get abc3");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc3", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc3';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc4', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc4'"
-    console.log("get abc9");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc4", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc4';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc5', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc5'"
-    console.log("get abc5");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc5", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc5';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc6', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc6'"
-    console.log("get abc6");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc6", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc6';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc7', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc7'"
-    console.log("get abc7");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc7", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc7';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc8', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc8'"
-    console.log("get abc8");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc8", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc8';
-            res.send(results);
-        }
-    })
-})
-
-app.get('/getabc9', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc9'"
-    console.log("get abc9");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc9", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc9';
-            res.send(results);
-        }
-    })
-})
-
-
-app.get('/getabc10', function(req, res) {
-    let sql = "SELECT * FROM wafs WHERE valve = 'abc10'"
-    console.log("get abc10");
-    con.query (sql, (error, results) => {
-        if (error) throw error;
-        console.log(results);
-        if (results.length === 0) {
-            console.log("no wafs found")
-            results = [{ "valve": "abc10", "waf":"no wafs attached" }]
-            console.log(results)
-            res.send(results);
-        } else {
-            console.log("waf found");
-            results[0].id_valve = 'abc10';
-            res.send(results);
-        }
-    })
-})
-
 //LOGIN (AUTHENTICATE USER)
 app.post("/login", async (req, res)=> {
     const username = req.body.username
     const password = req.body.password
     const sqlSearch = "Select * from employees where username = ?"
     const search_query = mysql.format(sqlSearch,[username])
-
-     await con.query (search_query, async (err, result) => {
+    await con.query (search_query, async (err, result) => {
       
       if (err) throw (err)
       if (result.length == 0) {
        console.log("--------> User does not exist")
        res.sendStatus(404)
-      } 
-      else {
+      } else {
          const hashedPassword = result[0].password
          //get the hashedPassword from result
         if (await bcrypt.compare(password, hashedPassword)) {
         console.log("---------> Login Successful")
 	    res.redirect('/systemselection');
-        } 
-        else {
+        } else {
         console.log("---------> Password Incorrect")
         res.send("Password incorrect!")
         } //end of bcrypt.compare()
@@ -446,8 +237,7 @@ app.post('/systemwafs', async (req, res) => {
             console.log("valve has no wafs");
             console.log(results);
             res.send(results);
-        }
-        else {
+        } else {
         console.log(results)
         res.send(results);
         }
@@ -499,7 +289,7 @@ app.post('/systemload', async (req, res) => {
     const sqlpipeSearch = "SELECT * FROM pipes where system = ?"
     const sqlcompSearch = "SELECT * FROM components where system = ?"
     const search_query = mysql.format(sqlSearch,[system, system, system])
-console.log(sqlSearch)
+    console.log(sqlSearch)
     await con.query(search_query, async (error, results, fields) => {
         if (error) throw error;
         if (results.length == 0) {
@@ -513,206 +303,200 @@ console.log(sqlSearch)
     })
 })
 
-    app.post("/submitnewdiagram", upload.single('diagram'), async function (req,res) {
-        console.log(req.file)
-        const system = req.file.originalname.replace('.png', '');
-        console.log(system)
-        
-        const sqlSearch = "SELECT * FROM systems where system = ?"
-        const search_query = mysql.format(sqlSearch,[system])
-        const sqlInsert = "INSERT INTO systems (system) VALUES (?)"
-        const insert_query = mysql.format(sqlInsert,[system])
-        await con.query (search_query, async (err, result) => {
-            if (err) throw (err)
-            console.log("search results")
-            console.log(result.length)
-            if (result.length == 0) {
-                console.log("system not found: " + system)
-                console.log("creating new system")
-                await con.query (insert_query, (err, result) => {
-                    if (err) throw (err)
-                    console.log ("Created new system " + system)
-                    console.log(result.insertId)
-                    res.send("system added")
-                })
-            } else {
-                console.log("system exists")
-                res.send("system exists")
-            }
-        })   // end of con.query
-    }); // end of app.post
-
-
-
-    app.post("/savevalve", async (req,res) => {
-        console.log(req.body);
-        const valve = req.body.valve;
-        const status = req.body.status;
-        console.log(valve)
-        const sqlSearch = "SELECT * FROM valves WHERE valve = ?"
-        const search_query = mysql.format(sqlSearch,[valve])
-        const sqlInsert = "INSERT INTO valves VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, status, action) VALUES (?,?,?)"
-        const insert_query = mysql.format(sqlInsert,[valve, status])
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status, "changed status"])
-        const sqlUpdate = "UPDATE `valves` SET `status` = ? WHERE `valve`= ?"
-        const update_query = mysql.format(sqlUpdate,[status, valve])
-        await con.query (search_query, async (err, result) => {
-            if (err) throw (err)
-            console.log("search results")
-            console.log(result.length)
-            if (result.length == 0) {
-                console.log("valve not found: " + valve)
-                res.redirect("/systemlist")
-            } else {
-                console.log("initiating update")
-                await con.query (update_query, (err, result, row, fields) => {
-                    if (err) throw (err)
-                    console.log ("Updating valve " + valve)
-                    console.log(result)
-                    console.log(row)
-                })
-                await con.query (insertHistory_query, (err, result) => {
-                    if (err) throw (err)
-                    console.log("Adding history")
-                })
-                res.redirect("/systemlist")
-            }
-        })   // end of con.query
-    }); // end of app.post
+app.post("/submitnewdiagram", upload.single('diagram'), async function (req,res) {
+    console.log(req.file)
+    const system = req.file.originalname.replace('.png', '');
+    console.log(system)
     
-    app.post("/addwaf", async(req,res) => {
-        console.log(req.body);
-        const waf = req.body.waf;
-        const valve = req.body.valve;
-        const sqlSearch = "SELECT * FROM wafs WHERE waf = ? AND valve = ?"
-        const permitsqlSearch = " SELECT * FROM permits WHERE valve = ?"
-        const search_query = mysql.format(sqlSearch,[waf, valve])
-        const permitsearch_query = mysql.format(permitsqlSearch,[valve])
-        const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
-        const insert_query = mysql.format(sqlInsert,[waf, valve])
-        await con.query (search_query, async (err, result) => {
-            if (err) throw (err)
-            console.log("------> Search Results")
-            console.log(result.length)
-            if (result.length != 0) {
-             console.log("------> waf already exists: " + valve)
-             res.send("waf exists") 
-            } 
-            else { 
-                await con.query(permitsearch_query, async(err,result) => {
-                    if (err) throw (err)
-                    if(result.length!=0) {
-                        console.log("permit exists for valve: " + valve)
-                    }
-                    else {
-                        await con.query(insert_query, (err, result) => {
-                            if (err) throw err;
-                            console.log(result)
-                        })
-                        await con.query(insertHistory_query, (err, result) => {
-                            if (err) throw err;
-                            console.log(result)
-                        })
-                        res.send("permit added");
-                    }
-                })
+    const sqlSearch = "SELECT * FROM systems where system = ?"
+    const search_query = mysql.format(sqlSearch,[system])
+    const sqlInsert = "INSERT INTO systems (system) VALUES (?)"
+    const insert_query = mysql.format(sqlInsert,[system])
+    await con.query (search_query, async (err, result) => {
+        if (err) throw (err)
+        console.log("search results")
+        console.log(result.length)
+        if (result.length == 0) {
+            console.log("system not found: " + system)
+            console.log("creating new system")
+            await con.query (insert_query, (err, result) => {
+                if (err) throw (err)
+                console.log ("Created new system " + system)
+                console.log(result.insertId)
+                res.send("system added")
+            })
+        } else {
+            console.log("system exists")
+            res.send("system exists")
+        }
+    })   // end of con.query
+}); // end of app.post
 
-        
-    }
-})
+
+
+app.post("/savevalve", async (req,res) => {
+    console.log(req.body);
+    const valve = req.body.valve;
+    const status = req.body.status;
+    console.log(valve)
+    const sqlSearch = "SELECT * FROM valves WHERE valve = ?"
+    const search_query = mysql.format(sqlSearch,[valve])
+    const sqlInsert = "INSERT INTO valves VALUES (?,?)"
+    const sqlInsertHistory =  "INSERT INTO systemhistory (valve, status, action) VALUES (?,?,?)"
+    const insert_query = mysql.format(sqlInsert,[valve, status])
+    const insertHistory_query = mysql.format(sqlInsertHistory,[valve, status, "changed status"])
+    const sqlUpdate = "UPDATE `valves` SET `status` = ? WHERE `valve`= ?"
+    const update_query = mysql.format(sqlUpdate,[status, valve])
+    await con.query (search_query, async (err, result) => {
+        if (err) throw (err)
+        console.log("search results")
+        console.log(result.length)
+        if (result.length == 0) {
+            console.log("valve not found: " + valve)
+            res.redirect("/systemlist")
+        } else {
+            console.log("initiating update")
+            await con.query (update_query, (err, result, row, fields) => {
+                if (err) throw (err)
+                console.log ("Updating valve " + valve)
+                console.log(result)
+                console.log(row)
+            })
+            await con.query (insertHistory_query, (err, result) => {
+                if (err) throw (err)
+                console.log("Adding history")
+            })
+            res.redirect("/systemlist")
+        }
+    })   // end of con.query
+}); // end of app.post
+
+app.post("/addwaf", async(req,res) => {
+    console.log(req.body);
+    const waf = req.body.waf;
+    const valve = req.body.valve;
+    const sqlSearch = "SELECT * FROM wafs WHERE waf = ? AND valve = ?"
+    const permitsqlSearch = " SELECT * FROM permits WHERE valve = ?"
+    const search_query = mysql.format(sqlSearch,[waf, valve])
+    const permitsearch_query = mysql.format(permitsqlSearch,[valve])
+    const sqlInsert =  "INSERT INTO wafs (waf, valve) VALUES (?,?)"
+    const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
+    const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "added waf"])
+    const insert_query = mysql.format(sqlInsert,[waf, valve])
+    await con.query (search_query, async (err, result) => {
+        if (err) throw (err)
+        console.log("------> Search Results")
+        console.log(result.length)
+        if (result.length != 0) {
+            console.log("------> waf already exists: " + valve)
+            res.send("waf exists") 
+        } 
+        else { 
+            await con.query(permitsearch_query, async(err,result) => {
+                if (err) throw (err)
+                if(result.length!=0) {
+                    console.log("permit exists for valve: " + valve)
+                } else {
+                    await con.query(insert_query, (err, result) => {
+                        if (err) throw err;
+                        console.log(result)
+                    })
+                    await con.query(insertHistory_query, (err, result) => {
+                        if (err) throw err;
+                        console.log(result)
+                    })
+                    res.send("permit added");
+                }
+            })
+        }
     })
-
-    app.post("/addwork", async(req,res) => {
-        console.log(req.body);
-        const permit = req.body.permit;
-        const valve = req.body.valve;
-        const sqlSearch = "SELECT * FROM permits WHERE permit = ? AND valve = ?"
-        const wafSearch = "SELECT * FROM wafs WHERE valve = ?"
-        const search_query = mysql.format(sqlSearch,[permit, valve])
-        const wafsearch_query = mysql.format(wafSearch,[valve])
-        const sqlInsert =  "INSERT INTO permits (permit, valve) VALUES (?,?)"
-        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "added permit"])
-        const insert_query = mysql.format(sqlInsert,[permit, valve])
-        await con.query (search_query, async (err, result) => {
-            if (err) throw (err)
-            console.log("------> Search Results")
-            console.log(result.length)
-            if (result.length != 0) {
-             console.log("------> permit already exists: " + valve)
-             res.send("permit exists") 
-            } 
-            else { 
-                await con.query(wafsearch_query, async(err,result) => {
-                    if (err) throw (err)
-                    if(result.length!=0) {
-                        console.log("waf exists for valve: " + valve)
-                    }
-                    else {
-                        await con.query(insert_query, (err, result) => {
-                            if (err) throw err;
-                            console.log(result)
-                        })
-                        await con.query(insertHistory_query, (err, result) => {
-                            if (err) throw err;
-                            console.log(result)
-                        })
-                        res.send("permit added");
-                    }
-                })
-
-        
-    }
 })
-    })
 
-    app.post("/removewaf", async (req,res) => {
-        console.log("remove waf");
-        const valve = req.body.valve;
-        const waf = req.body.waf;
-        const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
-        const search_query = mysql.format(sqlSearch,[waf])
-        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "deleted waf"])
-        const sqlDelete = "DELETE FROM wafs WHERE valve = ? AND waf = ?"
-        const delete_query = mysql.format(sqlDelete,[valve, waf])
-        await con.query(insertHistory_query, (err, result) => {
-            if (err) throw err;
-            console.log(result)
-        })
-                await con.query (delete_query, (err, result, row, fields) => {
-                    if (err) throw (err)
-                    console.log ("deleting waf " + waf + " on valve " + valve)
-                    console.log(result)
-                }) 
-                res.send("waf removed")
-    }); // end of app.post
-      
-    app.post("/removepermit", async (req,res) => {
-        console.log("remove permit");
-        const valve = req.body.valve;
-        const permit = req.body.permit;
-        const sqlSearch = "SELECT * FROM permits WHERE permit = ?"
-        const search_query = mysql.format(sqlSearch,[permit])
-        const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
-        const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "deleted permit"])
-        const sqlDelete = "DELETE FROM permits WHERE valve = ? AND permit = ?"
-        const delete_query = mysql.format(sqlDelete,[valve, permit])
-        await con.query(insertHistory_query, (err, result) => {
-            if (err) throw err;
-            console.log(result)
-        })
-                await con.query (delete_query, (err, result, row, fields) => {
-                    if (err) throw (err)
-                    console.log ("deleting permit " + permit + " on valve " + valve)
-                    console.log(result)
-                }) 
-                res.send("permit removed")
-    }); // end of app.post
-        
+app.post("/addwork", async(req,res) => {
+    console.log(req.body);
+    const permit = req.body.permit;
+    const valve = req.body.valve;
+    const sqlSearch = "SELECT * FROM permits WHERE permit = ? AND valve = ?"
+    const wafSearch = "SELECT * FROM wafs WHERE valve = ?"
+    const search_query = mysql.format(sqlSearch,[permit, valve])
+    const wafsearch_query = mysql.format(wafSearch,[valve])
+    const sqlInsert =  "INSERT INTO permits (permit, valve) VALUES (?,?)"
+    const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
+    const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "added permit"])
+    const insert_query = mysql.format(sqlInsert,[permit, valve])
+    await con.query (search_query, async (err, result) => {
+        if (err) throw (err)
+        console.log("------> Search Results")
+        console.log(result.length)
+        if (result.length != 0) {
+            console.log("------> permit already exists: " + valve)
+            res.send("permit exists") 
+        } 
+        else { 
+            await con.query(wafsearch_query, async(err,result) => {
+                if (err) throw (err)
+                if(result.length!=0) {
+                    console.log("waf exists for valve: " + valve)
+                } else {
+                    await con.query(insert_query, (err, result) => {
+                        if (err) throw err;
+                        console.log(result)
+                    })
+                    await con.query(insertHistory_query, (err, result) => {
+                        if (err) throw err;
+                        console.log(result)
+                    })
+                    res.send("permit added");
+                }
+            })
+        }
+    })
+})
+
+app.post("/removewaf", async (req,res) => {
+    console.log("remove waf");
+    const valve = req.body.valve;
+    const waf = req.body.waf;
+    const sqlSearch = "SELECT * FROM wafs WHERE waf = ?"
+    const search_query = mysql.format(sqlSearch,[waf])
+    const sqlInsertHistory =  "INSERT INTO systemhistory (valve, waf, action) VALUES (?,?,?)"
+    const insertHistory_query = mysql.format(sqlInsertHistory,[valve, waf, "deleted waf"])
+    const sqlDelete = "DELETE FROM wafs WHERE valve = ? AND waf = ?"
+    const delete_query = mysql.format(sqlDelete,[valve, waf])
+    await con.query(insertHistory_query, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+    })
+            await con.query (delete_query, (err, result, row, fields) => {
+                if (err) throw (err)
+                console.log ("deleting waf " + waf + " on valve " + valve)
+                console.log(result)
+            }) 
+            res.send("waf removed")
+}); // end of app.post
+    
+app.post("/removepermit", async (req,res) => {
+    console.log("remove permit");
+    const valve = req.body.valve;
+    const permit = req.body.permit;
+    const sqlSearch = "SELECT * FROM permits WHERE permit = ?"
+    const search_query = mysql.format(sqlSearch,[permit])
+    const sqlInsertHistory =  "INSERT INTO systemhistory (valve, permit, action) VALUES (?,?,?)"
+    const insertHistory_query = mysql.format(sqlInsertHistory,[valve, permit, "deleted permit"])
+    const sqlDelete = "DELETE FROM permits WHERE valve = ? AND permit = ?"
+    const delete_query = mysql.format(sqlDelete,[valve, permit])
+    await con.query(insertHistory_query, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+    })
+            await con.query (delete_query, (err, result, row, fields) => {
+                if (err) throw (err)
+                console.log ("deleting permit " + permit + " on valve " + valve)
+                console.log(result)
+            }) 
+            res.send("permit removed")
+}); // end of app.post
+    
 app.post("/register", async (req,res) => {
     const username = req.body.username;
     const hashedPassword = await bcrypt.hash(req.body.password,10);

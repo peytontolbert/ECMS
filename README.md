@@ -33,3 +33,4 @@ npm start
 ## Requirements
 
 - must create config.js file
+- docker run -p 555:555 pinboards/pinboards:1.0

@@ -1,3 +1,30 @@
+async function systemsearch() {
+    const data = await fetch('./systemlistsearch').then(response => (response.json())).then(data => displaySystems(data));
+    }
+
+
+    
+async function displaySystems(data) {
+    var systemlist = document.getElementById("systemlist");
+    var systemselect = document.getElementById("systemselect");
+    console.log(data)
+    for(i=0;i<data.length;i++) {
+        var system = data[i].system
+        var newoption = document.createElement('option');
+        systemselect.appendChild(newoption);
+        newoption.value= system;
+        newoption.innerHTML = system;
+        newoption.id = system;
+    }
+}
+
+async function systemLookup() {
+    var img = document.getElementById('canvas');
+    system = document.getElementById("systemselect");
+    newsysvalve = document.getElementById('systemname');
+    systemname.innerHTML = system.value;
+    img.src = "/images/"+system.value+".png";
+}
 
 async function getCursorPosition(canvas, event) {
     const rect = await canvas.getBoundingClientRect()
@@ -23,6 +50,16 @@ function doSomething() {
     visible++;
     } else {
         newvalve.visibility = 'hidden';
+        visible--;
+    }
+}
+
+function doSomething2() {
+    if(newcomponent.visibility==='hidden') {
+    newcomponent.visibility = 'visible';
+    visible++;
+    } else {
+        newcomponent.visibility = 'hidden';
         visible--;
     }
 }
@@ -78,6 +115,7 @@ const firstbox = document.getElementById('x');
 const secondbox = document.getElementById('y');
 const canvas = document.getElementById('canvas');
 const newvalve = document.getElementById('newvalve').style;
+const newcomponent = document.getElementById('newcomponent').style;
 var click = 1;
 var visible = 0;
 let diagram = document.getElementById('diagram');
@@ -98,3 +136,6 @@ window.addEventListener('load', function() {
         }
     });
 });
+
+
+systemsearch();

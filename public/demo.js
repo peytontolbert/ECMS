@@ -66,7 +66,8 @@ function loadsystem(data) {
         const systemmap = document.getElementById('systemmap');
         const valve = newvalves[i].valve;
         const coords = newvalves[i].coords;
-        const energy = newvalves[i].energy;
+        const energy = new Boolean(false);
+        
         const newvalve = document.createElement('p');
         newvalve.innerHTML = valve;
         newvalve.id = valve;

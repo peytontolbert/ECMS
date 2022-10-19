@@ -3,10 +3,11 @@ Pinboards is an Engineering System Configuration Management System which utilize
 Checkout a demo at http://pinboardz.azurewebsites.net (serverless - slow initial load time)
 
 ## Features
-
-- Server: NodeJS and Express powered server
+- Projects Database server for individual project ventures
+- User Database server for microservice capabilities
+- Server: WebApp Server, User Database Server, Projects Database Server
 - Client: HTML5 powered with modern practices
-- Database: MySQL
+- Database: MySQL, MongoDB(NOSQL)
 - Host: Microsoft Azure Services
 - /systemlist allows viewing of a system with active statuses along with the ability to manipulate valve/component status
 - /systemhistorydata logs all changes performed on system through it's lifetime

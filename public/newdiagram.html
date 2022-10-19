@@ -11,7 +11,7 @@
 		}
 	</style>
 </head>
-<body align='center'>
+<body align='left'>
         <header>
 		<h1>Create new diagram</h1>
             <label for=""img">Select image:</label>
@@ -19,19 +19,47 @@
                 <input type="file" name="diagram"/>
                 <input type="submit" value="Send">
         </form>
+        <h1>systems:</h1>
+        <select id="systemselect">
+        <option id="blank"></option>
+        </select>
+        <button onclick=systemLookup()>load</button>
         <button onclick=doSomething()>New valve</button>
+        <button onclick=doSomething2()>New component</button>
         <form id="newvalve" style="visibility: hidden">
-            <input type="text" id="system" placeholder="system name"></input>
-            <input type="text" id="valve" placeholder="valve name"></input>
+            <p id='systemname'></p>
+            <select id="type">
+                <option value="valve">valve</option>
+                <option value="pipe">pipe</option>
+                <option value="component">component</option>
+                <option value="pump">pump </option>
+                <option value="pump">tank </option>
+            </select>
+            <select id="plane">
+                <option value="vertical">vertical</option>
+                <option value="horizontal">horizontal</option>
+            </select>
+            <input type="text" id="valve" placeholder="name"></input>
             <button onclick=firstCord()>First cords</button>
             <input type="text" id="x" placeholder="First click"></input>
             <button onclick=secCord()>Second cords</button>
             <input type="text" id="y" placeholder="Second click"></input>
             <button onclick=submitValve()>Submit</button>
         </form>
+        <form id="newcomponent" style="visibility: hidden">
+            <p id='systemname'></p>
+            <input type="text" id="x" placeholder="name"></input>
+            <button onclick=firstCord()>First cords</button>
+            <input type="text" id="x" placeholder="First click"></input>
+            <button onclick=secCord()>Second cords</button>
+            <input type="text" id="y" placeholder="Second click"></input>
+            <button onclick=submitValve()>Submit</button>
+            <button onclick=newline()>New Line</button>
+        </form>
+        <div>
+        <img class="image" id="canvas" src="">
+        </d>
 	</header>
-    <img id="canvas" src="">
-
 
 </body>
 

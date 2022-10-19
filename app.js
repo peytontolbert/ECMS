@@ -75,6 +75,10 @@ app.get('/systemlist', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/systemlist.html'));
 });
 
+app.get('/demo', function(request, response) {
+	response.sendFile(path.join(__dirname + '/public/demo.html'));
+});
+
 app.get('/dbmanagement', function(request, response) {
 	response.sendFile(path.join(__dirname + '/public/dbmanagement.html'));
 });
